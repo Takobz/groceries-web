@@ -1,0 +1,6 @@
+@Groceries.Core.Application_HostAddress = http://localhost:5190
+
+GET {{Groceries.Core.Application_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

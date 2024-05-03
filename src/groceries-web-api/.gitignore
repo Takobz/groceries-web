@@ -36,8 +36,14 @@ x86/
 build/
 bld/
 [Bb]in/
-[Oo]bj/*
+[Oo]bj/
 [Oo]ut/
 msbuild.log
 msbuild.err
 msbuild.wrn
+
+*.csproj.nuget.dgspec.json
+*.csproj.nuget.g.props
+*.csproj.nuget.g.targets
+project.assets.json
+project.nuget.cache

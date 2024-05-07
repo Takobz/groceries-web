@@ -2,24 +2,26 @@ import React from 'react';
 import Box from '@mui/material/Box';
 import { AppBar, Toolbar, Typography } from '@mui/material';
 import AccountCircle from '@mui/icons-material/AccountCircle';
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
 
-Header = () => {
+const Header = () => {
     return (
     <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static">
+        <AppBar sx={{ bgcolor: "white" }} position="static">
             <Toolbar>
                 <IconButton
                     size="large"
                     edge="strat"
                     color="inherit"
                     aria-labelledby="menu"
-                    sx={{ mr: 2 }}>
+                    sx={{ mr: 2, color: "black" }}>
                     <MenuIcon />
                 </IconButton>
-                <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                <Typography variant="h6" component="div" sx={{ flexGrow: 1, color: "black" }}>
                     Groceries
                 </Typography>
-                <AccountCircle />
+                <AccountCircle sx={{ color: "black" }}/>
             </Toolbar>
         </AppBar>
     </Box>

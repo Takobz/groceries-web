@@ -2,23 +2,28 @@ import React from 'react';
 import './styles/App.css';
 import Header from './components/shared/Header';
 import Box from '@mui/material/Box';
-import { BrowserRouter as Router, Switch, Route, createBrowserRouter, createRoutesFromElements, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import HomePage from './components/Pages/HomePage';
+import NewCartPage from './components/Pages/NewCartPage';
 
 function App() {
-  const router = createBrowserRouter(
-    createRoutesFromElements(
-      <Route path="/" element={ <Home />}/>
-    )
-  );
+  const router = createBrowserRouter([
+    {
+      path: '/',
+      element: <HomePage />
+    },
+    {
+      path: '/new-cart',
+      element: <NewCartPage />
+    }
+  ]);
 
-  //fix this
   return (
     <>
       <Header />
-      <div className='center-element'>
+      <Box sx={{ display: 'flex', justifyContent: 'center'}}>
         <RouterProvider router={router} />
-      </div>
+      </Box>
     </>
   );
 }

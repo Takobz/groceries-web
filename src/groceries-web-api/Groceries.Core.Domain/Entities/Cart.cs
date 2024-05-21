@@ -15,5 +15,7 @@ namespace Groceries.Core.Domain.Entities
             _items.Add(item);
             return this;
         }
+
+        //TODO: Fire an event when an item is added to the cart
     }
 }

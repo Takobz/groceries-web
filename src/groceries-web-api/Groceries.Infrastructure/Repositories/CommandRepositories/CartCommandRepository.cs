@@ -1,0 +1,1 @@
+//Command classes should strictly use Domain Entities and Value Objects, and should not use Data Models.

@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Groceries.Tests.Unit", "Gro
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Groceries.Tests.Integration", "Groceries.Tests.Integration\Groceries.Tests.Integration.csproj", "{B0F7C1CA-9AD9-422F-A4B9-71FF42513692}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Groceries.Data", "Groceries.Data\Groceries.Data.csproj", "{3E13F3B9-0104-4EE8-AFB2-02D166FDB4B5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,5 +44,9 @@ Global
 		{B0F7C1CA-9AD9-422F-A4B9-71FF42513692}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B0F7C1CA-9AD9-422F-A4B9-71FF42513692}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B0F7C1CA-9AD9-422F-A4B9-71FF42513692}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E13F3B9-0104-4EE8-AFB2-02D166FDB4B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E13F3B9-0104-4EE8-AFB2-02D166FDB4B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E13F3B9-0104-4EE8-AFB2-02D166FDB4B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E13F3B9-0104-4EE8-AFB2-02D166FDB4B5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

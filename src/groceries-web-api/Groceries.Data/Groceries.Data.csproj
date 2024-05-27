@@ -2,7 +2,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Groceries.Core.Domain\Groceries.Core.Domain.csproj" />
-    <ProjectReference Include="..\Groceries.Data\Groceries.Data.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

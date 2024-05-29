@@ -4,6 +4,7 @@ namespace Groceries.Data.DataModels
     /// Represents a grocery item in the database.
     /// To be used by Entity Framework Core to map the database table.
     /// </summary>
+    #pragma warning disable CS8618
     public class GroceryItem
     {
         public Guid Id { get; set; }

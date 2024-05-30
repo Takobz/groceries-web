@@ -1,5 +1,5 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
-WORKDIR /source 
+WORKDIR /source/groceries-web-api
 
 #restore app solution
 COPY *.sln .
@@ -15,7 +15,7 @@ RUN dotnet restore
 # add unit tests to image build?
 
 #copy all files to source and publish
-COPY . ./groceries-web-api/
+COPY . ../groceries-web-api/
 WORKDIR /source/groceries-web-api
 RUN dotnet publish -c release -o /app --no-restore
 

@@ -1,0 +1,20 @@
+version: '3'
+services:
+  # postgres:
+  #   image: postgres:latest
+  #   environment:
+  #     POSTGERS_PASSWORD: postgres_password # required for postgress
+  webapi:
+    build:
+      context: ./src/groceries-web-api
+      dockerfile: Dockerfile.dev
+    ports: 
+      - '7005:80'
+      - '5190:81'
+    #using defaults for initial set-up
+    environment:
+      - PGUSER=postgres
+      - PGPASSWORD=postgres_password
+      - PGDB=postgres # to change the database name
+      - PGHOST=postgres
+      - PGPORT=5432 # default port

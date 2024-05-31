@@ -17,10 +17,11 @@ RUN dotnet restore
 #copy all files to source and publish
 COPY . ../groceries-web-api/
 WORKDIR /source/groceries-web-api
-RUN dotnet publish -c release -o /app --no-restore
+RUN dotnet publish -c Debug -o /app --no-restore
 
 #build runtime image
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
 WORKDIR /app
 COPY --from=build /app ./
-ENTRYPOINT ["dotnet", "groceries-web-api.dll"]
+# use ENTRYPOINT in prod dockerfile, CMD for dev to allow us -it into the container
+CMD ["dotnet", "Groceries.Core.Application.dll"]

@@ -3,6 +3,12 @@ services:
   #   image: postgres:latest
   #   environment:
   #     POSTGERS_PASSWORD: postgres_password # required for postgress
+  client:
+    build:
+      context: ./groceries-web
+      dockerfile: Dockerfile.dev
+    ports:
+      - '3000:3000'
   webapi:
     build:
       context: ./groceries-web-api

@@ -19,6 +19,6 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 //API Routes
-app.MapBasketRoutes();
+app.MapCartRoutes();
 
 app.Run();

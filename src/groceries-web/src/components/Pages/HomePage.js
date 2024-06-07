@@ -2,7 +2,7 @@ import React from 'react'
 
 const HomePage = () => {
 
-    return (<>Home Pagee</>)
+    return (<>Home Page</>)
 }
 
 export default HomePage

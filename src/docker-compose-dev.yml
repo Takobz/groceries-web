@@ -7,6 +7,9 @@ services:
     build:
       context: ./groceries-web
       dockerfile: Dockerfile.dev
+    volumes:
+      - /app/node_modules
+      - ./groceries-web:/app
     ports:
       - '3000:3000'
   webapi:

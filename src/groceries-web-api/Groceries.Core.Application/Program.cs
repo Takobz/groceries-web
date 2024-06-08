@@ -1,4 +1,6 @@
 using Groceries.Core.Application.ApiReoutes;
+using Groceries.Infrastructure.Extensions;
+using Groceries.Infrastructure.Repositories.DbContexts;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -6,6 +8,13 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+var postgresOptions = new PostgresOptions();
+builder.Configuration.GetSection(PostgresOptions.PostgresOption).Bind(postgresOptions);
+builder.Services.AddPostgresDbContext(postgresOptions);
+builder.Services.AddRepositories();
+
+builder.Services.AddRepositoryModelMapping();
 
 var app = builder.Build();
 

@@ -10,7 +10,7 @@ namespace Groceries.Data.DataModels
         public Guid Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public List<GroceryItem> Items { get; set; }
+        public List<GroceryItem> GroceryItems { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
     }

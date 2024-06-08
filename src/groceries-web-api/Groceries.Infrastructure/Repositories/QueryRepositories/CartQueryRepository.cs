@@ -2,7 +2,7 @@ using Groceries.Core.Domain.Repositories;
 
 namespace Groceries.Infrastructure.Repositories.QueryRepositories 
 {
-    public class CartRepository<Cart> : IQueryRepository<Data.DataModels.Cart>
+    public class CartQueryRepository : IQueryRepository<Data.DataModels.Cart>
     {
         //IQueryable maybe ?
         public Task<IEnumerable<Data.DataModels.Cart>> GetAllAsync()

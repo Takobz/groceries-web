@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace Groceries.Data.DataModels
 {
     /// <summary>
@@ -15,5 +17,9 @@ namespace Groceries.Data.DataModels
         public string ImageUrl { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
+
+        //Foreign Key and Navigation Property
+        public Guid CartId { get; set; }
+        public Cart Cart { get; set; }
     }
 }

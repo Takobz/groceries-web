@@ -1,14 +1,14 @@
-namespace Groceries.Core.Application.Models.DTOs.Response
+namespace Groceries.Core.Application.Models.ServiceModels
 {
-    public class CreateCartResponseDTO
+    public class CartResponse
     {
         public Guid CartId { get; init; } = Guid.NewGuid();
         public string Name { get; init; } = string.Empty;
         public string Description { get; init; } = string.Empty;
-        public IEnumerable<CreateCartItemResponseDTO> GroceryItems { get; init; } = [];
+        public IEnumerable<CartItemResponse> GroceryItems { get; init; } = [];
     }
 
-    public class CreateCartItemResponseDTO
+    public class CartItemResponse
     {
         public Guid CartItemId { get; init; }
         public string Name { get; init; } = string.Empty;

@@ -14,5 +14,9 @@ namespace Groceries.Data.DataModels
         public bool IsCompleted { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
+
+        //Foreign Key and Navigation Property
+        public Guid CartId { get; set; }
+        public Cart Cart { get; set; }
     }
 }

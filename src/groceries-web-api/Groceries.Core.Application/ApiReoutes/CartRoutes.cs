@@ -1,7 +1,6 @@
 using Groceries.Core.Application.Models;
 using Groceries.Core.Application.Models.DTOs.Requests;
 using Groceries.Core.Application.Models.DTOs.Response;
-using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace Groceries.Core.Application.ApiReoutes
 {
@@ -15,6 +14,7 @@ namespace Groceries.Core.Application.ApiReoutes
 
             app.MapPost("/api/cart", async (CreateCartRequestDTO request, IConfiguration configuration) => 
             {
+                
                 return Results.Created($"/api/cart/{Guid.NewGuid()}", new ApiResponse<CreateCartResponseDTO>(new CreateCartResponseDTO()));
             })
             .WithName("AddToCart")

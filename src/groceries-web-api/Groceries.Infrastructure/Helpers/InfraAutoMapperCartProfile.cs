@@ -2,9 +2,9 @@ using AutoMapper;
 
 namespace Groceries.Infrastructure.Helpers
 {
-    public class AutoMapperCartProfile : Profile
+    public class InfraAutoMapperCartProfile : Profile
     {
-        public AutoMapperCartProfile()
+        public InfraAutoMapperCartProfile()
         {
             #region Cart Domain Model to Database Model
             CreateMap<Core.Domain.Entities.Cart, Data.DataModels.Cart>()

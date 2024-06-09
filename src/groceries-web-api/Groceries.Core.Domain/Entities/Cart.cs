@@ -4,6 +4,10 @@ namespace Groceries.Core.Domain.Entities
 {
     public class Cart : Entity, IAggregateRoot
     {
+        /// <summary>
+        /// For Creating Domain Model use this, don't use any auto mapper package(s)
+        /// We want the domain model to be as pure as possible and apply the business logic in the domain model
+        /// </summary>
         public Cart(
             string name,
             string description,

@@ -30,7 +30,7 @@ namespace Groceries.Infrastructure.Extensions
 
         public static IServiceCollection AddRepositoryModelMapping(this IServiceCollection services)
         {
-            services.AddAutoMapper(typeof(AutoMapperCartProfile));
+            services.AddAutoMapper(typeof(InfraAutoMapperCartProfile));
             return services;
         }
     }

@@ -1,18 +1,25 @@
 using Groceries.Core.Domain.Repositories;
+using Groceries.Infrastructure.Repositories.DbContexts;
+using Microsoft.EntityFrameworkCore;
 
 namespace Groceries.Infrastructure.Repositories.QueryRepositories 
 {
     public class CartQueryRepository : IQueryRepository<Data.DataModels.Cart>
     {
-        //IQueryable maybe ?
-        public Task<IEnumerable<Data.DataModels.Cart>> GetAllAsync()
+        private readonly IGroceriesDbContext _groceriesDbContext;
+
+        public CartQueryRepository(IGroceriesDbContext groceriesDbContext)
         {
-            throw new NotImplementedException();
+            _groceriesDbContext = groceriesDbContext;
+        }
+        public async Task<IEnumerable<Data.DataModels.Cart>> GetAllAsync()
+        {
+            return await _groceriesDbContext.Carts.ToListAsync();
         }
 
-        public Task<Data.DataModels.Cart> GetByIdAsync(Guid id)
+        public async Task<Data.DataModels.Cart?> GetByIdAsync(Guid id)
         {
-            throw new NotImplementedException();
+            return await _groceriesDbContext.Carts.FirstOrDefaultAsync(cart => cart.Id == id);
         }
     }
 }

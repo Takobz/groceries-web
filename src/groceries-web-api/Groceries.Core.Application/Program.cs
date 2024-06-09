@@ -1,4 +1,5 @@
 using Groceries.Core.Application.ApiReoutes;
+using Groceries.Core.Application.Extensions;
 using Groceries.Infrastructure.Extensions;
 using Groceries.Infrastructure.Repositories.DbContexts;
 
@@ -15,6 +16,7 @@ builder.Services.AddPostgresDbContext(postgresOptions);
 builder.Services.AddRepositories();
 
 builder.Services.AddRepositoryModelMapping();
+builder.Services.AddApplicationModelMappings();
 
 var app = builder.Build();
 

@@ -12,6 +12,10 @@ namespace Groceries.Core.Domain.Entities
         public DateTime CreatedAt { get; internal set; }
         public DateTime UpdatedAt { get; internal set; }
 
+        /// <summary>
+        /// For Creating Domain Model use this, don't use any auto mapper package(s)
+        /// We want the domain model to be as pure as possible and apply the business logic in the domain model
+        /// </summary>
         public GroceryItem(
             string name,
             string description,

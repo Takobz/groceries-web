@@ -6,7 +6,7 @@ namespace Groceries.Core.Domain.Repositories
     /// <typeparam name="T">Class that represent a Data Model that represent the database columns</typeparam>
     public interface IQueryRepository<T> where T : class
     {
-        Task<T> GetByIdAsync(Guid id);
+        Task<T?> GetByIdAsync(Guid id);
         Task<IEnumerable<T>> GetAllAsync();
     }
 }

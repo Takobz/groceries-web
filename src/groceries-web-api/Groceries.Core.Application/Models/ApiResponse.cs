@@ -10,5 +10,15 @@ namespace Groceries.Core.Application.Models
         public T Data { get; }
     }
 
+    public class ApiResponseCollection<T> where T : class
+    {
+        public ApiResponseCollection(IEnumerable<T> data)
+        {
+            Data = data;
+        }
+
+        public IEnumerable<T> Data { get; }
+    }
+
     public class EmptyApiResponse{ }
 }

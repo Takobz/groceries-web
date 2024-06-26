@@ -1,0 +1,15 @@
+# Create Cart Item
+# @name createCartItemCall
+POST {{HostAddress}}/api/cart
+Content-Type: application/json
+{
+    "name": "Test Cart Item - {{$guid}}",
+    "description": "Test Cart Item Description",
+    "groceryItems": []
+}
+
+@createCartId = createCartItemCall.response.body.data.cartId
+
+# Get Cart Item
+# @name getCartItemCall
+GET {{HostAddress}}/api/cart/{{createCartId}}

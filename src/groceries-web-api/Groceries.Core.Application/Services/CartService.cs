@@ -11,6 +11,7 @@ namespace Groceries.Core.Application.Services
     {
         Task<CartResponse> CreateCartAsync(CreateCartRequestDTO createCartRequestDTO);
         Task<CartResponse?> GetCartAsync(Guid cartId);
+        Task<IEnumerable<CartResponse>> GetAllCartsAsync();
     }
 
     public class CartService : ICartService
@@ -62,6 +63,12 @@ namespace Groceries.Core.Application.Services
         {
             var cart = await _cartQueryRepository.GetByIdAsync(cartId);
             return cart == null ? null : _mapper.Map<CartResponse>(cart);
+        }
+
+        public async Task<IEnumerable<CartResponse>> GetAllCartsAsync()
+        {
+            var carts = await _cartQueryRepository.GetAllAsync();
+            return carts == null || carts.Any() ? [] : carts.Select(_mapper.Map<CartResponse>);
         }
     }
 }

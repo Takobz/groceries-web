@@ -1,5 +1,6 @@
 using Groceries.Core.Application.ApiReoutes;
 using Groceries.Core.Application.Extensions;
+using Groceries.Core.Application.Services;
 using Groceries.Infrastructure.Extensions;
 using Groceries.Infrastructure.Repositories.DbContexts;
 
@@ -17,6 +18,8 @@ builder.Services.AddRepositories();
 
 builder.Services.AddRepositoryModelMapping();
 builder.Services.AddApplicationModelMappings();
+
+builder.Services.AddTransient<ICartService, CartService>();
 
 var app = builder.Build();
 

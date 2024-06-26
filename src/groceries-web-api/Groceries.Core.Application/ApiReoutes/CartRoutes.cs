@@ -19,6 +19,15 @@ namespace Groceries.Core.Application.ApiReoutes
             .WithName("GetCart")
             .WithOpenApi();
 
+            app.MapGet("/api/cart/all", async (ICartService cartService, IMapper mapper) => 
+            {
+                var cartResponses = await cartService.GetAllCartsAsync();
+                var cartResponseDTOs = cartResponses.Select(cartResponse => mapper.Map<CartResponseDTO>(cartResponse));
+                return Results.Ok(new ApiResponseCollection<CartResponseDTO>(cartResponseDTOs));
+            })
+            .WithName("GetAllCarts")
+            .WithOpenApi();
+
             app.MapPost("/api/cart", async (CreateCartRequestDTO request, ICartService cartService, IMapper mapper) => 
             {
                 //Code too optimistic think about failure scenarios

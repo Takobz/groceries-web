@@ -1,5 +1,6 @@
 ## Tasks To Do
-A read me with tasks of stuff I need to do.
+- Code First Migration for Postgres database.
+- Add Postgres in dev docker compose.
 
 ## Current Progress:
 - Build API to CRUD cart and items.

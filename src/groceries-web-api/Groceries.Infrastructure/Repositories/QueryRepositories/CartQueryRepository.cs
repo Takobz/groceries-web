@@ -12,6 +12,7 @@ namespace Groceries.Infrastructure.Repositories.QueryRepositories
         {
             _groceriesDbContext = groceriesDbContext;
         }
+        
         public async Task<IEnumerable<Data.DataModels.Cart>> GetAllAsync()
         {
             return await _groceriesDbContext.Carts.ToListAsync();

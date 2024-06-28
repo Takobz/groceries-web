@@ -3,6 +3,7 @@ using Groceries.Core.Application.Models;
 using Groceries.Core.Application.Models.DTOs.Requests;
 using Groceries.Core.Application.Models.DTOs.Response;
 using Groceries.Core.Application.Services;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Groceries.Core.Application.ApiReoutes
 {

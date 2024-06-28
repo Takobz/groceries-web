@@ -17,13 +17,13 @@ namespace Groceries.Core.Application.Services
     public class CartService : ICartService
     {
         private readonly ICartCommandRepository _cartCommandRepository;
-        private readonly IQueryRepository<Data.DataModels.Cart> _cartQueryRepository;
+        private readonly IQueryRepository<Groceries.Data.DataModels.Cart> _cartQueryRepository;
         private readonly ILogger<CartService> _logger;
         private readonly IMapper _mapper;
 
         public CartService(
             ICartCommandRepository cartCommandRepository,
-            IQueryRepository<Data.DataModels.Cart> cartQueryRepository,
+            IQueryRepository<Groceries.Data.DataModels.Cart> cartQueryRepository,
             ILogger<CartService> logger,
             IMapper mapper)
         {
@@ -35,7 +35,7 @@ namespace Groceries.Core.Application.Services
 
         public async Task<CartResponse> CreateCartAsync(CreateCartRequestDTO createCartRequestDTO)
         {
-            var createdAt = DateTime.Now;
+            var createdAt = DateTime.UtcNow;
             var cartItems = createCartRequestDTO.GroceryItems.Select(groceryItem => new GroceryItem(
                 groceryItem.Name,
                 groceryItem.Description,
@@ -68,7 +68,7 @@ namespace Groceries.Core.Application.Services
         public async Task<IEnumerable<CartResponse>> GetAllCartsAsync()
         {
             var carts = await _cartQueryRepository.GetAllAsync();
-            return carts == null || carts.Any() ? [] : carts.Select(_mapper.Map<CartResponse>);
+            return carts == null || !carts.Any() ? [] : carts.Select(_mapper.Map<CartResponse>);
         }
     }
 }

@@ -1,8 +1,11 @@
 services:
-  # postgres:
-  #   image: postgres:latest
-  #   environment:
-  #     POSTGERS_PASSWORD: postgres_password # required for postgress
+  postgres:
+    image: postgres:latest
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_PASSWORD: postgres_password # required for postgress
+      POSTGRES_DB: groceries_database
   client:
     build:
       context: ./groceries-web
@@ -25,6 +28,6 @@ services:
       - DOTNET_RUNNING_IN_CONTAINER=true
       - PGUSER=postgres
       - PGPASSWORD=postgres_password
-      - PGDB=postgres # to change the database name
+      - PGDB=groceries_database
       - PGHOST=postgres
       - PGPORT=5432 # default port

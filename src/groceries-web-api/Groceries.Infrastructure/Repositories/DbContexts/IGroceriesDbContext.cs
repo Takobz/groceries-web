@@ -9,11 +9,4 @@ namespace Groceries.Infrastructure.Repositories.DbContexts
         DbSet<Data.DataModels.Reminder> Reminders { get; set; }
         public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }
-
-    public class GroceriesDbContext(DbContextOptions<GroceriesDbContext> options) : DbContext(options), IGroceriesDbContext
-    {
-        public DbSet<Data.DataModels.Cart> Carts { get; set; }
-        public DbSet<Data.DataModels.GroceryItem> CartItems { get; set; }
-        public DbSet<Data.DataModels.Reminder> Reminders { get; set; }
-    }
 }

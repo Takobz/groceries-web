@@ -15,10 +15,14 @@ services:
       - ./groceries-web:/app
     ports:
       - '3000:3000'
-  webapi:
+  # thinking this will create a postgres container and web api container.
+  # how will I feed environment variables to postgres container?
+  webapi: 
     build:
       context: ./groceries-web-api
       dockerfile: Dockerfile.dev
+    depends_on:
+      - postgres
     ports: 
       - '7005:5000'
     #using defaults for initial set-up

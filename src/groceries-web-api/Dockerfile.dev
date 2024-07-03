@@ -1,6 +1,9 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /source/groceries-web-api
 
+# install EF Core tools
+RUN dotnet tool install --global dotnet-ef
+
 #restore app solution
 COPY *.sln .
 COPY ./Groceries.Core.Domain/*.csproj ./Groceries.Core.Domain/
@@ -18,6 +21,19 @@ RUN dotnet restore
 COPY . ../groceries-web-api/
 WORKDIR /source/groceries-web-api
 RUN dotnet publish -c Debug -o /app --no-restore
+
+# export environment variables needed by Postgres db migrations
+# TODO: figure out how to get postgres at this point.
+ENV PGDB=groceries_database
+ENV PGUSER=postgres
+ENV PGPASSWORD=postgres_password
+ENV PGPORT=5432
+#host should match postgres service name in docker-compose-dev.yml
+ENV PGHOST=postgres
+
+#update database migrations if any
+WORKDIR /source/groceries-web-api/Groceries.Core.Application
+RUN /root/.dotnet/tools/dotnet-ef database update --verbose
 
 #build runtime image
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime

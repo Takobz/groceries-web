@@ -3,6 +3,8 @@ using Groceries.Core.Application.Extensions;
 using Groceries.Core.Application.Services;
 using Groceries.Infrastructure.Extensions;
 using Groceries.Infrastructure.Repositories.DbContexts;
+using Groceries.Core.Application.Data;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.AddEnvironmentVariables();
@@ -28,6 +30,10 @@ builder.Services.AddRepositoryModelMapping();
 builder.Services.AddApplicationModelMappings();
 
 builder.Services.AddTransient<ICartService, CartService>();
+
+//TODO: Find a cleaner way to do this
+var dbContext = builder.Services.BuildServiceProvider().GetService<GroceriesDbContext>();
+dbContext.Database.Migrate();
 
 var app = builder.Build();
 

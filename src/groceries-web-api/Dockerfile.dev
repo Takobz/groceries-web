@@ -2,7 +2,7 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /source/groceries-web-api
 
 # install EF Core tools
-RUN dotnet tool install --global dotnet-ef
+#RUN dotnet tool install --global dotnet-ef
 
 #restore app solution
 COPY *.sln .
@@ -30,10 +30,6 @@ ENV PGPASSWORD=postgres_password
 ENV PGPORT=5432
 #host should match postgres service name in docker-compose-dev.yml
 ENV PGHOST=postgres
-
-#update database migrations if any
-WORKDIR /source/groceries-web-api/Groceries.Core.Application
-RUN /root/.dotnet/tools/dotnet-ef database update --verbose
 
 #build runtime image
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime

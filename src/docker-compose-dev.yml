@@ -6,6 +6,7 @@ services:
     environment:
       POSTGRES_PASSWORD: postgres_password # required for postgress
       POSTGRES_DB: groceries_database
+    restart: unless-stopped
   client:
     build:
       context: ./groceries-web
@@ -15,8 +16,7 @@ services:
       - ./groceries-web:/app
     ports:
       - '3000:3000'
-  # thinking this will create a postgres container and web api container.
-  # how will I feed environment variables to postgres container?
+    restart: on-failure
   webapi: 
     build:
       context: ./groceries-web-api
@@ -25,6 +25,7 @@ services:
       - postgres
     ports: 
       - '7005:5000'
+    restart: on-failure
     #using defaults for initial set-up
     environment:
       - ASPNETCORE_ENVIRONMENT=Development

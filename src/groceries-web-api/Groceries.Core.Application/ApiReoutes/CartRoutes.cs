@@ -3,7 +3,6 @@ using Groceries.Core.Application.Models;
 using Groceries.Core.Application.Models.DTOs.Requests;
 using Groceries.Core.Application.Models.DTOs.Response;
 using Groceries.Core.Application.Services;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Groceries.Core.Application.ApiReoutes
 {
@@ -37,6 +36,22 @@ namespace Groceries.Core.Application.ApiReoutes
                 return Results.Created($"/api/cart/{cartResponseDTO.CartId}", new ApiResponse<CreateCartResponseDTO>(cartResponseDTO));
             })
             .WithName("CreateCart")
+            .WithOpenApi();
+
+            app.MapDelete("/api/cart/{cartId}", async (Guid cartId, ICartService cartService) => {
+                var deleteResponse = await cartService.DeleteCartAsync(cartId);
+                if (deleteResponse.IsDeleted) 
+                {
+                    return Results.NoContent();
+                }
+                else if (!deleteResponse.IsCartFound)
+                {
+                    return Results.NotFound();
+                }
+
+                return Results.BadRequest();
+            })
+            .WithName("DeleteCart")
             .WithOpenApi();
 
             return app;

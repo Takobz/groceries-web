@@ -24,5 +24,10 @@ namespace Groceries.Core.Application.Extensions
             services.AddAutoMapper(typeof(AppAutoMapperCartProfile));
             return services;
         }
+
+        public static void AddDatabaseMigrations(this IServiceCollection services){
+            var groceriesDatabaseContext = services.BuildServiceProvider().GetRequiredService<GroceriesDbContext>();
+            groceriesDatabaseContext.Database.Migrate();
+        }
     }
 }

@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Groceries.Core.Application.Data
 {
+    #pragma warning disable CS8618 
     public class GroceriesDbContext : DbContext, IGroceriesDbContext
     {
         public GroceriesDbContext(DbContextOptions<GroceriesDbContext> options) : base(options)

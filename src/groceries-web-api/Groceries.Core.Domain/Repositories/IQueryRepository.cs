@@ -8,5 +8,6 @@ namespace Groceries.Core.Domain.Repositories
     {
         Task<T?> GetByIdAsync(Guid id);
         Task<IEnumerable<T>> GetAllAsync();
+        Task DeleteByIdAsync(T cart);
     }
 }

@@ -12,6 +12,7 @@ using Moq;
 
 namespace Groceries.Tests.Unit.ServicesTests
 {
+    #pragma warning disable CS8600
     public class CartServiceTests
     {
         private readonly Mock<ICartCommandRepository> _cartCommandRepositoryMock;

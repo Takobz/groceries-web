@@ -25,4 +25,4 @@ Just make sure you use values in the [launchSettings.json](./src/groceries-web-a
 
 ## Architecture and Design
 - [Application Design](./design-and-docs/docs/DDDImplementation.md)
-- [Solution Architecture](./)
+- [Use Cases](./design-and-docs/design-assets/groceries.drawio.png)

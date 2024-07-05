@@ -19,6 +19,13 @@ GET {{HostAddress}}/api/cart/{{createCartId}} HTTP/1.1
 
 ###
 
+# Delete Cart Item
+# @name deleteCartItemCall
+DELETE {{HostAddress}}/api/cart/{{createCartId}} HTTP/1.1
+###
+
 # Get All Cart Item
 # @name getAllCartItems
 GET {{HostAddress}}/api/cart/all HTTP/1.1
+###
+

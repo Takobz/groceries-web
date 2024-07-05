@@ -22,5 +22,11 @@ namespace Groceries.Infrastructure.Repositories.QueryRepositories
         {
             return await _groceriesDbContext.Carts.FirstOrDefaultAsync(cart => cart.Id == id);
         }
+
+        public async Task DeleteByIdAsync(Data.DataModels.Cart cart)
+        {
+            _groceriesDbContext.Carts.Remove(cart);
+            await _groceriesDbContext.SaveChangesAsync();
+        }
     }
 }

@@ -1,16 +1,35 @@
 import axios from 'axios'
 
-//TODO: figure what's up with environment vars
+//TODO: To enhance method and validity checks etc.
 const GroceriesAPIService = () => {
+    const groceriesBaseUrl = process.env.REACT_APP_GROCERIES_WEB_API_BASE_URI;
+    const timeout = 1000;
+
     const getAllCarts = async () => {
         return await axios.get('/api/cart/all' ,{
-            baseURL: process.env.GROCERIES_WEB_API_BASE_URI,
-            timeout: 1000,
+            baseURL: groceriesBaseUrl,
+            timeout: timeout,
         })
         .then(response => response.data);
     }
 
-    return {getAllCarts}
+    const createCart = async (createCartDTO) => {
+        return await axios.post('api/cart', {
+                name: createCartDTO.name,
+                description: createCartDTO.description,
+                groceryItems: []
+            }, 
+            {
+                baseURL: groceriesBaseUrl,
+                timeout: timeout,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
+        )
+    }
+
+    return {getAllCarts, createCart}
 }
 
 export default GroceriesAPIService

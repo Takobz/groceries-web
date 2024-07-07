@@ -4,15 +4,17 @@ import { AppBar, Toolbar, Typography } from '@mui/material';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
+import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
+    //TODO: Add Navigation back to home page.
+
     return (
     <Box sx={{ flexGrow: 1 }}>
         <AppBar sx={{ bgcolor: "white" }} position="static">
             <Toolbar>
                 <IconButton
                     size="large"
-                    edge="strat"
                     color="inherit"
                     aria-labelledby="menu"
                     sx={{ mr: 2, color: "black" }}>

@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import GroceriesAPIService from '../../Services/GroceriesAPIService'
-import axios from 'axios';
+import NoCarts from '../Cart/NoCarts'
 
 const HomePage = () => {
     const [carts, setCarts] = useState([]);
 
     useEffect(() => {
-        function getAllCarts() {
+        async function getAllCarts() {
 
-            GroceriesAPIService().getAllCarts()
+            await GroceriesAPIService().getAllCarts()
                 .then((response) => setCarts(response.data))
                 .catch((error) => console.error(error));
         }
@@ -16,11 +16,15 @@ const HomePage = () => {
         getAllCarts();
     }, [])
 
-    return (<div>{
-        carts.map((cart) => {
-            return (<div key={cart.id}>{cart.name}</div>)
-        })
-    }</div>);
+
+    return (<>{
+        carts != [] ? <NoCarts/>
+        : <div>{
+            carts.map((cart) => {
+                return (<div key={cart.cartId}>{cart.name}</div>);
+            })
+        }</div>
+    }</>)
 }
 
 export default HomePage

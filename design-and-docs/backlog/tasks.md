@@ -15,5 +15,6 @@
 ### V1
 - Add role based actions cart creator can provision.
 - Set reminder as calendar event sent to Google Calendar.
+- View Carts based on recipes.
 
 ### V2 - WhatsApp Integrations

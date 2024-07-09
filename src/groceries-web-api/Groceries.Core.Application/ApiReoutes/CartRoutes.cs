@@ -30,6 +30,7 @@ namespace Groceries.Core.Application.ApiReoutes
 
             app.MapPost("/api/cart", async (CreateCartRequestDTO request, ICartService cartService, IMapper mapper) => 
             {
+                //Add validation
                 //Code too optimistic think about failure scenarios
                 var cartResponse = await cartService.CreateCartAsync(request);
                 var cartResponseDTO = mapper.Map<CreateCartResponseDTO>(cartResponse);

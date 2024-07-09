@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { CreateCartResponseDTO } from '../models/CreateCartModels'
 
 //TODO: To enhance method and validity checks etc.
 const GroceriesAPIService = () => {
@@ -26,7 +27,17 @@ const GroceriesAPIService = () => {
                     'Content-Type': 'application/json'
                 }
             }
-        )
+        ).then(response => {
+            if (response.status === 201) {
+                return response.data;
+                //fix this
+                return new CreateCartResponseDTO(
+                    response.data.cartId,
+                    response.data.name,
+                    response.data.description
+                );
+            }
+        });
     }
 
     return {getAllCarts, createCart}

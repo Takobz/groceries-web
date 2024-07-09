@@ -5,6 +5,7 @@ import Box from '@mui/material/Box';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import HomePage from './components/Pages/HomePage';
 import NewCartPage from './components/Pages/NewCartPage';
+import Cart from './components/Pages/Cart';
 
 function App() {
   const router = createBrowserRouter([
@@ -15,6 +16,10 @@ function App() {
     {
       path: '/new-cart',
       element: <NewCartPage />
+    },
+    {
+      path: '/cart/:id',
+      element: <Cart />
     }
   ]);
 

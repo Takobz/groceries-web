@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { CreateCartResponseDTO } from '../models/CreateCartModels'
+import { CreateCartResponseDTO, GetCartResponseDTO } from '../models/CreateCartModels'
 
 //TODO: To enhance method and validity checks etc.
 const GroceriesAPIService = () => {
@@ -29,18 +29,32 @@ const GroceriesAPIService = () => {
             }
         ).then(response => {
             if (response.status === 201) {
-                return response.data;
-                //fix this
                 return new CreateCartResponseDTO(
-                    response.data.cartId,
-                    response.data.name,
-                    response.data.description
+                    response.data.data.cartId,
+                    response.data.data.name,
+                    response.data.data.description
                 );
             }
         });
     }
 
-    return {getAllCarts, createCart}
+    const getCart = async (cartId) => {
+        return await axios.get('api/cart/' + cartId, {
+            baseURL: groceriesBaseUrl,
+            timeout: timeout
+        }).then(response => {
+            if (response.status === 200) {
+                return new GetCartResponseDTO(
+                    response.data.data.cartId,
+                    response.data.data.name,
+                    response.data.data.description,
+                    response.data.data.items
+                );
+            }
+        });
+    }
+
+    return {getAllCarts, createCart, getCart}
 }
 
 export default GroceriesAPIService

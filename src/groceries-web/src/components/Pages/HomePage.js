@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import GroceriesAPIService from '../../Services/GroceriesAPIService'
 import NoCarts from '../Cart/NoCarts'
+import CartCard from '../Cart/CartCard';
 
 const HomePage = () => {
     const [carts, setCarts] = useState([]);
 
+    //TDOD fix this get carts on render or when carts change
     useEffect(() => {
         async function getAllCarts() {
 
@@ -14,16 +16,18 @@ const HomePage = () => {
         }
 
         getAllCarts();
-    }, [])
-
+    }, [carts]);
 
     return (<>{
-        carts != [] ? <NoCarts/>
-        : <div>{
+        carts === [] ? <NoCarts/>
+        : <ul>{
             carts.map((cart) => {
-                return (<div key={cart.cartId}>{cart.name}</div>);
+                return (
+                <li key={cart.cartId}>
+                    <CartCard name={cart.name} description={cart.description} />
+                </li>);
             })
-        }</div>
+        }</ul>
     }</>)
 }
 

@@ -1,4 +1,4 @@
-import { createTheme, ThemeProvider, useThemeProps } from "@mui/material"
+import { createTheme, ThemeProvider } from "@mui/material"
 import Button from "@mui/material/Button"
 
 const curvedButtonTheme = createTheme({

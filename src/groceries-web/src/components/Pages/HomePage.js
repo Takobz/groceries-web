@@ -19,7 +19,7 @@ const HomePage = () => {
     }, [carts]);
 
     return (<>{
-        carts === [] ? <NoCarts/>
+        !(carts.length) ? <NoCarts/>
         : <ul>{
             carts.map((cart) => {
                 return (

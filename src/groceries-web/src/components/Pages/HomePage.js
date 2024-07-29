@@ -6,7 +6,6 @@ import CartCard from '../Cart/CartCard';
 const HomePage = () => {
     const [carts, setCarts] = useState([]);
 
-    //TDOD fix this get carts on render or when carts change
     useEffect(() => {
         async function getAllCarts() {
 
@@ -16,7 +15,11 @@ const HomePage = () => {
         }
 
         getAllCarts();
-    }, [carts]);
+
+        //empty cleanup function
+        return () => {
+        }
+    }, []);
 
     return (<>{
         !(carts.length) ? <NoCarts/>

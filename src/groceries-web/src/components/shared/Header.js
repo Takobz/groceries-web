@@ -10,7 +10,7 @@ const Header = () => {
     //TODO: Add Navigation back to home page.
 
     return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ flexGrow: 1, mb: 2 }}>
         <AppBar sx={{ bgcolor: "white" }} position="static">
             <Toolbar>
                 <IconButton

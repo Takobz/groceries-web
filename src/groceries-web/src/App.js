@@ -26,7 +26,7 @@ function App() {
   return (
     <>
       <Header />
-      <Box sx={{ display: 'flex', justifyContent: 'center'}}>
+      <Box sx={{ display: 'flex', justifyContent: 'center' }}>
         <RouterProvider router={router} />
       </Box>
     </>

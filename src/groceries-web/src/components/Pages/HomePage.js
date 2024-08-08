@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import GroceriesAPIService from '../../Services/GroceriesAPIService'
 import NoCarts from '../Cart/NoCarts'
-import CartCard from '../Cart/CartCard';
+import AllCarts from '../Cart/AllCarts'
 
 const HomePage = () => {
     const [carts, setCarts] = useState([]);
@@ -23,14 +23,7 @@ const HomePage = () => {
 
     return (<>{
         !(carts.length) ? <NoCarts/>
-        : <ul>{
-            carts.map((cart) => {
-                return (
-                <li key={cart.cartId}>
-                    <CartCard name={cart.name} description={cart.description} />
-                </li>);
-            })
-        }</ul>
+        : <AllCarts carts={carts} />
     }</>)
 }
 

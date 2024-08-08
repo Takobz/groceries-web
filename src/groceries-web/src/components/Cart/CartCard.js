@@ -1,4 +1,4 @@
-import { Card, CardActions, CardContent, IconButton, Typography } from "@mui/material";
+import { Card, CardActionArea, CardActions, CardContent, IconButton, Typography } from "@mui/material";
 import EditIcon from '@mui/icons-material/Edit';
 import ShareIcon from '@mui/icons-material/Share';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
@@ -8,10 +8,12 @@ import DeleteIcon from '@mui/icons-material/Delete';
 const CartCard = (props) => {
     return (
         <Card>
-            <CardContent>
-                <Typography variant='h5'>{props.name}</Typography>
-                <Typography variant='body1'>{props.description}</Typography>
-            </CardContent>
+            <CardActionArea>
+                <CardContent>
+                    <Typography variant='h5'>{props.name}</Typography>
+                    <Typography variant='body1'>{props.description}</Typography>
+                </CardContent>
+            </CardActionArea>
 
             <CardActions>
                 <IconButton aria-label="edit-cart">
@@ -28,7 +30,7 @@ const CartCard = (props) => {
                 </IconButton>
             </CardActions>
         </Card>
-        );
+    );
 }
 
 export default CartCard;

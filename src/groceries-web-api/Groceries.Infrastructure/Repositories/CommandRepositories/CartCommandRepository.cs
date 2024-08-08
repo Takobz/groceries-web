@@ -8,6 +8,7 @@ namespace Groceries.Infrastructure.Repositories.CommandRepositories
     public interface ICartCommandRepository
     {
         Task<Data.DataModels.Cart> CreateCartAsync(Core.Domain.Entities.Cart cart);
+        Task<Data.DataModels.Cart> UpdateCartAsync(Core.Domain.Entities.Cart cart);
     }
 
     public class CartCommandRepository : ICartCommandRepository
@@ -25,6 +26,14 @@ namespace Groceries.Infrastructure.Repositories.CommandRepositories
         {
             var cartDataModel = _mapper.Map<Data.DataModels.Cart>(cart);
             _groceriesDbContext.Carts.Add(cartDataModel);
+            await _groceriesDbContext.SaveChangesAsync();
+            return cartDataModel;
+        }
+
+        public async Task<Data.DataModels.Cart> UpdateCartAsync(Core.Domain.Entities.Cart cart)
+        {
+            var cartDataModel = _mapper.Map<Data.DataModels.Cart>(cart);
+            _groceriesDbContext.Carts.Update(cartDataModel);
             await _groceriesDbContext.SaveChangesAsync();
             return cartDataModel;
         }

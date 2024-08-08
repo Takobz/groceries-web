@@ -26,6 +26,26 @@ namespace Groceries.Core.Domain.Entities
             ValidateCartData();
         }
 
+        public Cart(
+            Guid id,
+            string name,
+            string description,
+            Reminder reminder,
+            List<GroceryItem> items,
+            DateTime createdAt,
+            DateTime updatedAt)
+        {
+            Id = id;
+            Name = name;
+            Description = description;
+            Reminder = reminder ?? new();
+            CreatedAt = createdAt;
+            UpdatedAt = updatedAt;
+            _items = items ?? [];
+
+            ValidateCartData();
+        }
+
         private readonly List<GroceryItem> _items = [];
 
         public string Name { get; internal set; } = string.Empty;

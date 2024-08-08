@@ -39,6 +39,12 @@ namespace Groceries.Core.Application.ApiReoutes
             .WithName("CreateCart")
             .WithOpenApi();
 
+            app.MapPut("/api/cart/{cartId}", async (Guid cartId, ICartService cartService) => {
+                
+            })
+            .WithName("UpdateCart")
+            .WithOpenApi();
+
             app.MapDelete("/api/cart/{cartId}", async (Guid cartId, ICartService cartService) => {
                 var deleteResponse = await cartService.DeleteCartAsync(cartId);
                 if (deleteResponse.IsDeleted) 

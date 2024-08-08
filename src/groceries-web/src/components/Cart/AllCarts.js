@@ -6,7 +6,7 @@ const AllCarts = (props) => {
     return (
         <Stack spacing={2}>
             {props.carts.map((cart) => (
-                <CartCard key={cart.cartId} name={cart.name} description={cart.description} />
+                <CartCard cartId={cart.cartId} key={cart.cartId} name={cart.name} description={cart.description} />
             ))}
         </Stack>
     );

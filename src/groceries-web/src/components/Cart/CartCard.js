@@ -3,12 +3,19 @@ import EditIcon from '@mui/icons-material/Edit';
 import ShareIcon from '@mui/icons-material/Share';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { useNavigate } from "react-router-dom";
 
 //TODO Style the card
 const CartCard = (props) => {
+    const navigate = useNavigate();
+
+    const handleCardClick = () => {
+        navigate('/cart/' + props.cartId);
+    }
+
     return (
         <Card>
-            <CardActionArea>
+            <CardActionArea onClick={() => handleCardClick()}>
                 <CardContent>
                     <Typography variant='h5'>{props.name}</Typography>
                     <Typography variant='body1'>{props.description}</Typography>

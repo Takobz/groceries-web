@@ -13,6 +13,7 @@ namespace Groceries.Core.Application.Services
         Task<CartResponse?> GetCartAsync(Guid cartId);
         Task<IEnumerable<CartResponse>> GetAllCartsAsync();
         Task<DeleteCartResponse> DeleteCartAsync(Guid id);
+        Task<CartResponse?> UpdateCartAsync(UpdateCartRequestDTO updateCartRequestDTO);
     }
 
     public class CartService : ICartService
@@ -70,6 +71,37 @@ namespace Groceries.Core.Application.Services
         {
             var carts = await _cartQueryRepository.GetAllAsync();
             return carts == null || !carts.Any() ? [] : carts.Select(_mapper.Map<CartResponse>);
+        }
+
+        public async Task<CartResponse?> UpdateCartAsync(UpdateCartRequestDTO updateCartRequestDTO){
+            var cartToUpdate = await _cartQueryRepository.GetByIdAsync(updateCartRequestDTO.Id);
+            if (cartToUpdate == null)
+            {
+                _logger.LogWarning("Cart with id: {cartId} not found", updateCartRequestDTO.Id);
+                return null;
+            }
+
+            var updatedAt = DateTime.UtcNow;
+            var cartItems = updateCartRequestDTO.GroceryItems.Select(groceryItem => new GroceryItem(
+                groceryItem.Name,
+                groceryItem.Description,
+                groceryItem.Category,
+                groceryItem.Price,
+                groceryItem.ImageUrl,
+                groceryItem.CreatedAt,
+                updatedAt)).ToList();
+
+            var cartToUpdateEntity = new Cart(
+                updateCartRequestDTO.Id,
+                updateCartRequestDTO.Name,
+                updateCartRequestDTO.Description,
+                new Reminder(), //no Reminder logic atm
+                cartItems,
+                cartToUpdate.CreatedAt,
+                updatedAt);
+
+            var updatedCart = await _cartCommandRepository.UpdateCartAsync(cartToUpdateEntity);
+            return _mapper.Map<CartResponse>(updatedCart);
         }
 
         public async Task<DeleteCartResponse> DeleteCartAsync(Guid id)

@@ -54,7 +54,46 @@ const GroceriesAPIService = () => {
         });
     }
 
-    return {getAllCarts, createCart, getCart}
+    const updateCart = async (cartId, updateCartDTO) => {
+        return await axios.put('api/cart/' + cartId, {
+            name: updateCartDTO.name,
+            description: updateCartDTO.description,
+            groceryItems: updateCartDTO.groceryItems
+        }, {
+            baseURL: groceriesBaseUrl,
+            timeout: timeout,
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(response => {
+            if (response.status === 200) {
+                return new GetCartResponseDTO(
+                    response.data.data.cartId,
+                    response.data.data.name,
+                    response.data.data.description,
+                    response.data.data.items
+                );
+            }
+        });
+    }
+
+    const deleteCart = async (cartId) => {
+        const isDeleted = true;
+
+        return await axios.delete('api/cart/' + cartId, {
+            baseURL: groceriesBaseUrl,
+            timeout: timeout
+        }).then(response => {
+            if (response.status === 204) {
+                return isDeleted;
+            }
+            else{
+                return !isDeleted;
+            }
+        });
+    }
+
+    return {getAllCarts, createCart, getCart, deleteCart }
 }
 
 export default GroceriesAPIService

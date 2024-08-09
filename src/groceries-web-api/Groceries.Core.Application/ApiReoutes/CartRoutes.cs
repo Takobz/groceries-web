@@ -1,4 +1,5 @@
 using AutoMapper;
+using Groceries.Core.Application.Filters;
 using Groceries.Core.Application.Models;
 using Groceries.Core.Application.Models.DTOs.Requests;
 using Groceries.Core.Application.Models.DTOs.Response;
@@ -39,9 +40,11 @@ namespace Groceries.Core.Application.ApiReoutes
             .WithName("CreateCart")
             .WithOpenApi();
 
-            app.MapPut("/api/cart/{cartId}", async (Guid cartId, ICartService cartService) => {
-                
+            app.MapPut("/api/cart/{cartId}", async (Guid cartId, UpdateCartRequestDTO updateCartDTO, ICartService cartService) => {
+
+                return await Task.FromResult(Results.Ok());
             })
+            .AddEndpointFilter<UpdateCartValidatorFilter>()
             .WithName("UpdateCart")
             .WithOpenApi();
 

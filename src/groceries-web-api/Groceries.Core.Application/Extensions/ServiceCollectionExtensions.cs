@@ -1,5 +1,8 @@
+using FluentValidation;
 using Groceries.Core.Application.Data;
 using Groceries.Core.Application.Helpers;
+using Groceries.Core.Application.Models.DTOs.Requests;
+using Groceries.Core.Application.Validators;
 using Groceries.Infrastructure.Repositories.DbContexts;
 using Microsoft.EntityFrameworkCore;
 
@@ -28,6 +31,13 @@ namespace Groceries.Core.Application.Extensions
         public static void AddDatabaseMigrations(this IServiceCollection services){
             var groceriesDatabaseContext = services.BuildServiceProvider().GetRequiredService<GroceriesDbContext>();
             groceriesDatabaseContext.Database.Migrate();
+        }
+
+        public static IServiceCollection AddDTOValidators(this IServiceCollection services)
+        {
+            services.AddScoped<IValidator<UpdateCartRequestDTO>, UpdateCartDTOValidator>();
+            services.AddScoped<IValidator<UpdateCartItemRequestDTO>, UpdateCartItemDTOValidator>();
+            return services;
         }
     }
 }

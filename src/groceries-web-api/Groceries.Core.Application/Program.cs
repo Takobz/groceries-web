@@ -31,6 +31,8 @@ builder.Services.AddTransient<ICartService, CartService>();
 
 builder.Services.AddDatabaseMigrations();
 
+builder.Services.AddDTOValidators();
+
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(builder =>

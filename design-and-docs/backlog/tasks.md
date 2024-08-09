@@ -1,11 +1,14 @@
 ## Tasks To Do
 - ~~Code First Migration for Postgres database.~~
 - ~~Add Postgres in dev docker compose.~~
-- Add API Service to talk to Backend API
+- ~~Add API Service to talk to Backend API~~
+- Add API Validators for DTOs
+- Add API Filters to Apply the validation in an abstracted module.
+- Add AutoMapper for the Update Models.
 - Build UI Components for the API interactions.
 
 ## Current Progress:
-- Build Javascript API Service to do CRUD.
+- Build Component to view a single Cart.
 
 ### MVP
 - Anyone who visits the site can create cart.

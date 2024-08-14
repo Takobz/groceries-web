@@ -5,11 +5,11 @@ using Groceries.Core.Domain.DomainExceptions;
 
 namespace Groceries.Core.Application.Filters
 {
-    public class UpdateCartValidatorFilter : IEndpointFilter
+    public class UpdateCartValidationFilter : IEndpointFilter
     {
         private readonly IValidator<UpdateCartRequestDTO> _updateCartvalidator;
 
-        UpdateCartValidatorFilter(IValidator<UpdateCartRequestDTO> updateCartvalidator)
+        UpdateCartValidationFilter(IValidator<UpdateCartRequestDTO> updateCartvalidator)
         {
             _updateCartvalidator = updateCartvalidator;
         }

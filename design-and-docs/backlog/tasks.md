@@ -2,8 +2,9 @@
 - ~~Code First Migration for Postgres database.~~
 - ~~Add Postgres in dev docker compose.~~
 - ~~Add API Service to talk to Backend API~~
-- Add API Validators for DTOs
-- Add API Filters to Apply the validation in an abstracted module.
+- ~~Add API Validators for DTOs~~
+- ~~Add API Filters to Apply the validation in an abstracted module.~~
+- Add Global Exception Handler
 - Add AutoMapper for the Update Models.
 - Build UI Components for the API interactions.
 

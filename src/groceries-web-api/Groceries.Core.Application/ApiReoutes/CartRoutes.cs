@@ -14,9 +14,15 @@ namespace Groceries.Core.Application.ApiReoutes
             app.MapGet("/api/cart/{cartId}", async (Guid cartId, ICartService cartService, IMapper mapper) => 
             {
                 var cartResponse = await cartService.GetCartAsync(cartId);
+                if (cartResponse == null)
+                {
+                    return Results.NotFound();
+                }
+                
                 var cartResponseDTO = mapper.Map<CartResponseDTO>(cartResponse);
-                return cartResponse is not null ? Results.Ok(new ApiResponse<CartResponseDTO>(cartResponseDTO)) : Results.NotFound();
+                return Results.Ok(new ApiResponse<CartResponseDTO>(cartResponseDTO));
             })
+            .AddEndpointFilter<ReadCartValidationFilter>()
             .WithName("GetCart")
             .WithOpenApi();
 
@@ -37,6 +43,7 @@ namespace Groceries.Core.Application.ApiReoutes
                 var cartResponseDTO = mapper.Map<CreateCartResponseDTO>(cartResponse);
                 return Results.Created($"/api/cart/{cartResponseDTO.CartId}", new ApiResponse<CreateCartResponseDTO>(cartResponseDTO));
             })
+            .AddEndpointFilter<CreateCartValidationFilter>()
             .WithName("CreateCart")
             .WithOpenApi();
 
@@ -44,7 +51,7 @@ namespace Groceries.Core.Application.ApiReoutes
 
                 return await Task.FromResult(Results.Ok());
             })
-            .AddEndpointFilter<UpdateCartValidatorFilter>()
+            .AddEndpointFilter<UpdateCartValidationFilter>()
             .WithName("UpdateCart")
             .WithOpenApi();
 
@@ -61,6 +68,7 @@ namespace Groceries.Core.Application.ApiReoutes
 
                 return Results.BadRequest();
             })
+            .AddEndpointFilter<DeleteCartValidationFilter>()
             .WithName("DeleteCart")
             .WithOpenApi();
 

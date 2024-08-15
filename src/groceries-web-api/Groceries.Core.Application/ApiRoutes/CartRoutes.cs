@@ -5,7 +5,7 @@ using Groceries.Core.Application.Models.DTOs.Requests;
 using Groceries.Core.Application.Models.DTOs.Response;
 using Groceries.Core.Application.Services;
 
-namespace Groceries.Core.Application.ApiReoutes
+namespace Groceries.Core.Application.ApiRoutes
 {
     public static class CartRoutes
     {
@@ -37,8 +37,6 @@ namespace Groceries.Core.Application.ApiReoutes
 
             app.MapPost("/api/cart", async (CreateCartRequestDTO request, ICartService cartService, IMapper mapper) => 
             {
-                //Add validation
-                //Code too optimistic think about failure scenarios
                 var cartResponse = await cartService.CreateCartAsync(request);
                 var cartResponseDTO = mapper.Map<CreateCartResponseDTO>(cartResponse);
                 return Results.Created($"/api/cart/{cartResponseDTO.CartId}", new ApiResponse<CreateCartResponseDTO>(cartResponseDTO));
@@ -47,8 +45,8 @@ namespace Groceries.Core.Application.ApiReoutes
             .WithName("CreateCart")
             .WithOpenApi();
 
-            app.MapPut("/api/cart/{cartId}", async (Guid cartId, UpdateCartRequestDTO updateCartDTO, ICartService cartService) => {
-
+            app.MapPut("/api/cart/{cartId}", async (Guid cartId, UpdateCartRequestDTO updateCartDTO, ICartService cartService) => 
+            {
                 return await Task.FromResult(Results.Ok());
             })
             .AddEndpointFilter<UpdateCartValidationFilter>()

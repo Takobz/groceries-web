@@ -1,4 +1,4 @@
-using Groceries.Core.Application.ApiReoutes;
+using Groceries.Core.Application.ApiRoutes;
 using Groceries.Core.Application.Extensions;
 using Groceries.Core.Application.Services;
 using Groceries.Infrastructure.Extensions;

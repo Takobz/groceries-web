@@ -23,13 +23,15 @@ namespace Groceries.Core.Application.Extensions
                             400,
                             exception.Message));
                     }
-
-                    context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                    await context.Response.WriteAsJsonAsync(new ProblemDetailsDTO(
-                        "https://tools.ietf.org/html/rfc7231#section-6.5.4",
-                        "Internal Server Error",
-                        (int)HttpStatusCode.InternalServerError,
-                        exception.Message));
+                    else
+                    {
+                        context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                        await context.Response.WriteAsJsonAsync(new ProblemDetailsDTO(
+                            "https://tools.ietf.org/html/rfc7231#section-6.5.4",
+                            "Internal Server Error",
+                            (int)HttpStatusCode.InternalServerError,
+                            exception.Message));
+                    }
                 });
             });
         }

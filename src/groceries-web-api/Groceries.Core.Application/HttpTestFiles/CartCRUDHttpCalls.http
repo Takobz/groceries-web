@@ -19,6 +19,25 @@ GET {{HostAddress}}/api/cart/{{createCartId}} HTTP/1.1
 
 ###
 
+# Update Cart
+# @name updateCartItemCall
+PUT {{HostAddress}}/api/cart/{{createCartId}} HTTP/1.1
+Content-Type: application/json
+
+{
+    "Id": "{{createCartId}}",
+    "Name": "Test Cart Item - {{createCartId}}",
+    "Description": "Test Cart Item Description",
+    "GroceryItems": [{
+        "Name": "Test Grocery Item - {{createCartId}}",
+        "Description": "Test Grocery Item Description",
+        "Quantity": 1,
+        "Price": 1.99,
+        "Category": "Test Category"
+    }]
+}
+###
+
 # Delete Cart Item
 # @name deleteCartItemCall
 DELETE {{HostAddress}}/api/cart/{{createCartId}} HTTP/1.1

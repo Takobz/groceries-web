@@ -6,7 +6,6 @@
 - ~~Add API Filters to Apply the validation in an abstracted module.~~
 - ~~Add Global Exception Handler~~
 - Add More Domain Exception types
-- Add Application level execptions and make domain exceptions clean. Domain exceptions should be thrown at the Domain layer
 - Add AutoMapper for the Update Models.
 - Build UI Components for the API interactions.
 

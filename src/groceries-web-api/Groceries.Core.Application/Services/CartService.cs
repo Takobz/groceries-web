@@ -13,7 +13,7 @@ namespace Groceries.Core.Application.Services
         Task<CartResponse?> GetCartAsync(Guid cartId);
         Task<IEnumerable<CartResponse>> GetAllCartsAsync();
         Task<DeleteCartResponse> DeleteCartAsync(Guid id);
-        Task<CartResponse?> UpdateCartAsync(UpdateCartRequestDTO updateCartRequestDTO);
+        Task<CartResponse?> UpdateCartAsync(Guid id, UpdateCartRequestDTO updateCartRequestDTO);
     }
 
     public class CartService : ICartService
@@ -73,11 +73,11 @@ namespace Groceries.Core.Application.Services
             return carts == null || !carts.Any() ? [] : carts.Select(_mapper.Map<CartResponse>);
         }
 
-        public async Task<CartResponse?> UpdateCartAsync(UpdateCartRequestDTO updateCartRequestDTO){
-            var cartToUpdate = await _cartQueryRepository.GetByIdAsync(updateCartRequestDTO.Id);
+        public async Task<CartResponse?> UpdateCartAsync(Guid id, UpdateCartRequestDTO updateCartRequestDTO){
+            var cartToUpdate = await _cartQueryRepository.GetByIdAsync(id);
             if (cartToUpdate == null)
             {
-                _logger.LogWarning("Cart with id: {cartId} not found", updateCartRequestDTO.Id);
+                _logger.LogWarning("Cart with id: {cartId} not found", id);
                 return null;
             }
 

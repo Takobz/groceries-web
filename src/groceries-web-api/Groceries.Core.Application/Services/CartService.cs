@@ -14,6 +14,7 @@ namespace Groceries.Core.Application.Services
         Task<IEnumerable<CartResponse>> GetAllCartsAsync();
         Task<DeleteCartResponse> DeleteCartAsync(Guid id);
         Task<CartResponse?> UpdateCartAsync(Guid id, UpdateCartRequestDTO updateCartRequestDTO);
+        Task<CartResponse?> AddItemsToCartAsync(Guid id, AddItemsToCartRequestDTO addItemsToCartRequestDTO);
     }
 
     public class CartService : ICartService
@@ -57,7 +58,7 @@ namespace Groceries.Core.Application.Services
 
             var createdCart = await _cartCommandRepository.CreateCartAsync(cart);
 
-            _logger.LogInformation("Cart with id: {cartId}  and name {cartName} created successfully", cart.Id, cart.Name);
+            _logger.LogInformation("Cart with id: {cartId}  and name {cartName} created successfully", createdCart.Id, createdCart.Name);
             return _mapper.Map<CartResponse>(createdCart);
         }
 
@@ -71,6 +72,39 @@ namespace Groceries.Core.Application.Services
         {
             var carts = await _cartQueryRepository.GetAllAsync();
             return carts == null || !carts.Any() ? [] : carts.Select(_mapper.Map<CartResponse>);
+        }
+
+        public async Task<CartResponse?> AddItemsToCartAsync(Guid id, AddItemsToCartRequestDTO addCartItemRequestDTO)
+        {
+            var cart = await _cartQueryRepository.GetByIdAsync(id);
+            if (cart == null)
+            {
+                _logger.LogWarning("Cart with id: {cartId} not found", id);
+                return null;
+            }
+
+            var itemCreatedAt = DateTime.UtcNow;
+            var cartItems = addCartItemRequestDTO.GroceryItems.Select(groceryItem => new GroceryItem(
+                groceryItem.Name,
+                groceryItem.Description,
+                groceryItem.Category,
+                groceryItem.Price,
+                groceryItem.ImageUrl,
+                itemCreatedAt,
+                itemCreatedAt)).ToList();
+
+            var cartToUpdateEntity = new Cart(
+                cart.Id,
+                cart.Name,
+                cart.Description,
+                new Reminder(), //no Reminder logic atm
+                cartItems,
+                cart.CreatedAt,
+                itemCreatedAt); 
+
+            await _cartCommandRepository.UpdateCartAsync(cartToUpdateEntity);
+            var patchedCart = await _cartQueryRepository.GetByIdAsync(id);
+            return _mapper.Map<CartResponse>(patchedCart);           
         }
 
         public async Task<CartResponse?> UpdateCartAsync(Guid id, UpdateCartRequestDTO updateCartRequestDTO){
@@ -113,7 +147,7 @@ namespace Groceries.Core.Application.Services
                 return new DeleteCartResponse(isDeleted: false, isCartFound: false);
             }
 
-            await _cartQueryRepository.DeleteByIdAsync(cartToDelete);
+            await _cartCommandRepository.DeleteByIdAsync(cartToDelete);
             return new DeleteCartResponse(isDeleted: true, isCartFound: true);
         }
     }

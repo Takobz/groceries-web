@@ -14,5 +14,10 @@ namespace Groceries.Core.Application.Data
         public DbSet<Groceries.Data.DataModels.Cart> Carts { get; set; }
         public DbSet<Groceries.Data.DataModels.GroceryItem> CartItems { get; set; }
         public DbSet<Groceries.Data.DataModels.Reminder> Reminders { get; set; }
+
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            return await base.SaveChangesAsync(cancellationToken);
+        }
     }
 }

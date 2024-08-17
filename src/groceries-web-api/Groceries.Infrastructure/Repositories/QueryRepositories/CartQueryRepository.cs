@@ -15,18 +15,12 @@ namespace Groceries.Infrastructure.Repositories.QueryRepositories
         
         public async Task<IEnumerable<Data.DataModels.Cart>> GetAllAsync()
         {
-            return await _groceriesDbContext.Carts.ToListAsync();
+            return await _groceriesDbContext.Carts.Include(cart => cart.GroceryItems).ToListAsync();
         }
 
         public async Task<Data.DataModels.Cart?> GetByIdAsync(Guid id)
         {
-            return await _groceriesDbContext.Carts.FirstOrDefaultAsync(cart => cart.Id == id);
-        }
-
-        public async Task DeleteByIdAsync(Data.DataModels.Cart cart)
-        {
-            _groceriesDbContext.Carts.Remove(cart);
-            await _groceriesDbContext.SaveChangesAsync();
+            return await _groceriesDbContext.Carts.Include(cart => cart.GroceryItems).FirstOrDefaultAsync(cart => cart.Id == id);
         }
     }
 }

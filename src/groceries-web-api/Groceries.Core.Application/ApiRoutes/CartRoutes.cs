@@ -45,17 +45,31 @@ namespace Groceries.Core.Application.ApiRoutes
             .WithName("CreateCart")
             .WithOpenApi();
 
-            app.MapPut("/api/cart/{cartId}", async (Guid cartId, UpdateCartRequestDTO updateCartDTO, ICartService cartService, IMapper mapper) => 
+            //Think about what you want Update to do.
+            // app.MapPut("/api/cart/{cartId}", async (Guid cartId, UpdateCartRequestDTO updateCartDTO, ICartService cartService, IMapper mapper) => 
+            // {
+            //     var updateResponse = await cartService.UpdateCartAsync(cartId, updateCartDTO);
+            //     var updatedCart = mapper.Map<CartResponseDTO>(updateResponse);
+            //     return await Task.FromResult(Results.Ok(new ApiResponse<CartResponseDTO>(updatedCart)));
+            // })
+            // .AddEndpointFilter<UpdateCartValidationFilter>()
+            // .WithName("UpdateCart")
+            // .WithOpenApi();
+
+            app.MapPatch("/api/cart/{cartId}/items", async (Guid cartId, AddItemsToCartRequestDTO addItemsDTO, ICartService cartService, IMapper mapper) => 
             {
-                var updateResponse = await cartService.UpdateCartAsync(cartId, updateCartDTO);
-                var updatedCart = mapper.Map<CartResponseDTO>(updateResponse);
+                var addItemsResponse = await cartService.AddItemsToCartAsync(cartId, addItemsDTO);
+                if (addItemsResponse == null)
+                {
+                    return Results.NotFound();
+                }
+
+                var updatedCart = mapper.Map<CartResponseDTO>(addItemsResponse);
                 return await Task.FromResult(Results.Ok(new ApiResponse<CartResponseDTO>(updatedCart)));
             })
-            .AddEndpointFilter<UpdateCartValidationFilter>()
-            .WithName("UpdateCart")
+            .AddEndpointFilter<AddItemsToCartValidationFilter>()
+            .WithName("AddItemsToCart")
             .WithOpenApi();
-
-            //Add Endpoint to add items to cart
 
             app.MapDelete("/api/cart/{cartId}", async (Guid cartId, ICartService cartService) => {
                 var deleteResponse = await cartService.DeleteCartAsync(cartId);

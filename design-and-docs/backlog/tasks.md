@@ -5,8 +5,7 @@
 - ~~Add API Validators for DTOs~~
 - ~~Add API Filters to Apply the validation in an abstracted module.~~
 - ~~Add Global Exception Handler~~
-- Add More Domain Exception types
-- Add AutoMapper for the Update Models.
+- Add Idompotancy logic.
 - Build UI Components for the API interactions.
 
 ## Current Progress:

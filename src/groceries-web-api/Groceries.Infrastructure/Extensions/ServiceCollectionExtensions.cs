@@ -1,9 +1,7 @@
 using Groceries.Core.Domain.Repositories;
 using Groceries.Infrastructure.Helpers;
 using Groceries.Infrastructure.Repositories.CommandRepositories;
-using Groceries.Infrastructure.Repositories.DbContexts;
 using Groceries.Infrastructure.Repositories.QueryRepositories;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Groceries.Infrastructure.Extensions

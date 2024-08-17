@@ -39,6 +39,8 @@ namespace Groceries.Core.Application.Extensions
             services.AddScoped<IValidator<UpdateCartItemRequestDTO>, UpdateCartItemDTOValidator>();
             services.AddScoped<IValidator<CreateCartRequestDTO>, CreateCartDTOValidator>();
             services.AddScoped<IValidator<CreateCartItemRequestDTO>, CreateCartItemDTOValidator>();
+            services.AddScoped<IValidator<AddCartItemRequestDTO>, AddCartItemValidator>();
+            services.AddScoped<IValidator<AddItemsToCartRequestDTO>, AddItemsToCartValidator>();
             return services;
         }
     }

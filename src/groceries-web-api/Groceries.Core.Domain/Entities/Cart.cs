@@ -83,8 +83,6 @@ namespace Groceries.Core.Domain.Entities
             {
                 throw new DomainValidationException("Cart updated date cannot be default.");
             }
-
-            //Would be nice to fire an event for these exceptions
         }
 
         //TODO: Fire an event when an item is added to the cart

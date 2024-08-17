@@ -7,15 +7,13 @@ This section goes through how to run the web app locally as full application and
 ## Dependencies:
 Dependencies needed to run this locally.
 >[!NOTE]
-> Please note for Node and .NET, you can run the app locally without installing them on physical machine by using docker-compose, as seen [here](#docker-compose-dev). Though having them installed wouldn't hurt.
+> Please note for Node and .NET, you can run the app locally without installing them on your physical machine by using docker-compose, as seen [here](#docker-compose-dev). Though having them installed wouldn't hurt.
 
 
 - [Docker](https://www.docker.com/) for containerization
 - [Node](https://nodejs.org/en) for React
 - [.NET](https://dotnet.microsoft.com/en-us/download) for the WEB API
 - [Postgres image](https://hub.docker.com/_/postgres)
-
-
 
 ### Docker Compose Dev
 The local set uses Docker Compose to run the full application, here's how:  
@@ -32,7 +30,9 @@ The Application uses EF Code First Migration to create/update database tables. H
 - The Docker Compose file, has `restart: on-failure` so Docker will keep retrying to get the container up if it fails to start up, this is to account for when the database might be still initializing but the WEB API tries to connect or migrate.
 
 ### Runing the WEBAPI without Docker Compose
-To run API locally, you would need first to create Postgres database on your local machine that your web API can connect to.  
+If maybe you want to debug the WEB API via say vs code, the docker compose approach is not ideal as it will want you to rebuild images and you won't be able to use break points etc.  
+  
+To run API locally outside of a docker container, you would need to first create a Postgres database on your local machine that your web API can connect to.  
 The Postgres container should have configuration corresponding to the values in the environmentVariables in the [launchSetting.json](./src/groceries-web-api/Groceries.Core.Application/Properties/launchSettings.json).  
 
 #### Initial Run

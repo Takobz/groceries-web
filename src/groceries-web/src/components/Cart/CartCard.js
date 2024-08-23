@@ -14,7 +14,7 @@ const CartCard = (props) => {
     }
 
     return (
-        <Card>
+        <Card sx={{ minWidth: 500 }}>
             <CardActionArea onClick={() => handleCardClick()}>
                 <CardContent>
                     <Typography variant='h5'>{props.name}</Typography>

@@ -1,15 +1,17 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import GroceriesAPIService from "../../Services/GroceriesAPIService";
 import { useParams } from "react-router-dom";
+import EditCart from "../Cart/EditCart";
 
 const Cart = (props) => {
     const { id } = useParams();
+    const [cart, setCart] = useState({})
 
     useEffect(() => {
         async function getCart() {
             await GroceriesAPIService().getCart(id)
                 .then((response) => {
-                    console.log(response);
+                    setCart(response)
                 })
                 .catch((error) => console.error(error));
         }
@@ -22,7 +24,7 @@ const Cart = (props) => {
     }, [props.id]);
 
 
-    return <>I am cart: {props.name}</>
+    return (<EditCart cart={cart} />);
 }
 
 export default Cart;

@@ -5,13 +5,15 @@ import EditCart from "../Cart/EditCart";
 
 const Cart = (props) => {
     const { id } = useParams();
-    const [cart, setCart] = useState({})
+    const [cart, setCart] = useState({});
+    const [isCartRetrieved, setIsCartRetrieved] = useState(false);
 
     useEffect(() => {
         async function getCart() {
             await GroceriesAPIService().getCart(id)
                 .then((response) => {
-                    setCart(response)
+                    setCart(response);
+                    setIsCartRetrieved(true);
                 })
                 .catch((error) => console.error(error));
         }
@@ -23,8 +25,8 @@ const Cart = (props) => {
         }
     }, [props.id]);
 
-
-    return (<EditCart cart={cart} />);
+    //add spinner
+    return (isCartRetrieved ? <EditCart cart={cart} /> : <>Opps</>);
 }
 
 export default Cart;

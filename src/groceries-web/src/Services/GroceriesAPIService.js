@@ -48,7 +48,7 @@ const GroceriesAPIService = () => {
                     response.data.data.cartId,
                     response.data.data.name,
                     response.data.data.description,
-                    response.data.data.items
+                    response.data.data.groceryItems
                 );
             }
         });

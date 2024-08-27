@@ -5,11 +5,12 @@
 - ~~Add API Validators for DTOs~~
 - ~~Add API Filters to Apply the validation in an abstracted module.~~
 - ~~Add Global Exception Handler~~
-- Add Navigation on edit click of Cart Card.
+- ~~Add Navigation on edit click of Cart Card.~~
 - Add Cart Items from UI.
 - Add API logic for copying a cart.
 - Add Share link logic.
 - Delete Cart from the UI.
+- Add retry machanism in the UI on fetch
 
 ## Current Progress:
 - Build Component to view a single Cart.

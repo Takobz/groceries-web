@@ -1,10 +1,11 @@
 import { Modal } from "@mui/material";
 
 const AddCartItem = (props) => {
-    const [isOpened, setIsOpened] = useState(false);
 
     return (
-        <Modal>
+        <Modal
+            open={props.isOpen}
+            onClose={props.closeModal}>
             <p>Hi</p>
         </Modal>
     )

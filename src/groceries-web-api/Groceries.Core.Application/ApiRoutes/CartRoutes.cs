@@ -88,6 +88,21 @@ namespace Groceries.Core.Application.ApiRoutes
             .WithName("DeleteCart")
             .WithOpenApi();
 
+            app.MapPost("/api/cart/{cartId}/copy", async (Guid cartId, ICartService cartService, IMapper mapper) => 
+            {
+                var copyResponse = await cartService.CopyCartAsync(cartId);
+                if (copyResponse == null)
+                {
+                    return Results.NotFound();
+                }
+
+                var copiedCart = mapper.Map<CartResponseDTO>(copyResponse);
+                return await Task.FromResult(Results.Created($"/api/cart/{copiedCart.CartId}", new ApiResponse<CartResponseDTO>(copiedCart)));
+            })
+            .AddEndpointFilter<CopyCartValidationFilter>()
+            .WithName("CopyCart")
+            .WithOpenApi();
+
             return app;
         }
     }

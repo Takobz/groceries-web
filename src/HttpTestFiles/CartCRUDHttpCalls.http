@@ -4,7 +4,7 @@ POST {{HostAddress}}/api/cart HTTP/1.1
 content-type: application/json
 
 {
-    "Name": "Test Cart Item - {{$guid}}",
+    "Name": "Test Cart - {{$guid}}",
     "Description": "Test Cart Item Description",
     "GroceryItems": []
 }
@@ -42,6 +42,11 @@ Content-Type: application/json
     ]
 }
 ###
+
+# Copy a cart
+# @name copyCartCall
+POST {{HostAddress}}/api/cart/{{createCartId}}/copy HTTP/1.1
+
 
 # Delete Cart Item
 # @name deleteCartItemCall

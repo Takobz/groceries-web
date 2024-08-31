@@ -15,6 +15,7 @@ namespace Groceries.Core.Application.Services
         Task<DeleteCartResponse> DeleteCartAsync(Guid id);
         Task<CartResponse?> UpdateCartAsync(Guid id, UpdateCartRequestDTO updateCartRequestDTO);
         Task<CartResponse?> AddItemsToCartAsync(Guid id, AddItemsToCartRequestDTO addItemsToCartRequestDTO);
+        Task<CartResponse?> CopyCartAsync(Guid id);
     }
 
     public class CartService : ICartService
@@ -149,6 +150,37 @@ namespace Groceries.Core.Application.Services
 
             await _cartCommandRepository.DeleteByIdAsync(cartToDelete);
             return new DeleteCartResponse(isDeleted: true, isCartFound: true);
+        }
+
+        public async Task<CartResponse?> CopyCartAsync(Guid id)
+        {
+            var cartToCopy = await _cartQueryRepository.GetByIdAsync(id);
+            if (cartToCopy == null)
+            {
+                _logger.LogWarning("Cart with id: {cartId} not found", id);
+                return null;
+            }
+
+            var createdAt = DateTime.UtcNow;
+            var cartItems = cartToCopy.GroceryItems.Select(groceryItem => new GroceryItem(
+                groceryItem.Name,
+                groceryItem.Description,
+                groceryItem.Category,
+                groceryItem.Price,
+                groceryItem.ImageUrl,
+                createdAt,
+                createdAt)).ToList();
+
+            var copiedCart = new Cart(
+                $"{cartToCopy.Name} - Copy",
+                cartToCopy.Description,
+                new Reminder(),
+                cartItems,
+                createdAt,
+                createdAt);
+
+            var createdCart = await _cartCommandRepository.CreateCartAsync(copiedCart);
+            return _mapper.Map<CartResponse>(createdCart);
         }
     }
 }

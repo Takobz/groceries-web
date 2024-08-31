@@ -7,10 +7,11 @@
 - ~~Add Global Exception Handler~~
 - ~~Add Navigation on edit click of Cart Card.~~
 - ~~Add Cart Items from UI.~~
-- Add API logic for copying a cart.
+- ~~Add API logic for copying a cart.~~
 - Add Share link logic.
 - Delete Cart from the UI.
 - Add retry machanism in the UI on fetch
+- Add Screenshots of the APP
 
 ## Current Progress:
 - Build Component to view a single Cart.

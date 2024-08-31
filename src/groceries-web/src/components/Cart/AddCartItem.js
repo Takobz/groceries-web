@@ -1,9 +1,14 @@
 
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+import { Stack } from '@mui/material';
+import TitleAndDescription from '../shared/TitleAndDescription';
+import TextInput from '../shared/TextInput';
+import CurvedButton from '../shared/CurvedButton';
+import NumberInput from '../shared/NumberInput';
+import GroceriesAPIService from '../../Services/GroceriesAPIService';
+import { addCartItemsRequestDTO, addCartItemRequestDTO } from '../../models/updateCartModels'
 
 const style = {
     position: 'absolute',
@@ -17,8 +22,35 @@ const style = {
     p: 4,
 };
 
-
+//TODO: Add Quantity field
 const AddCartItem = (props) => {
+    const [itemName, setItemName] = React.useState('');
+    const [itemDescription, setItemDescription] = React.useState('');
+    const [itemCategory, setItemCategory] = React.useState('');
+    const [itemPrice, setItemPrice] = React.useState(0);
+
+    const handleAddItem = () => {
+        var addItemsDT0 = new addCartItemsRequestDTO(
+            props.cartId, 
+            [
+                new addCartItemRequestDTO(
+                    itemName,
+                    itemDescription,
+                    itemCategory,
+                    itemPrice
+                )
+            ]
+        )
+
+        GroceriesAPIService().addCartItems(addItemsDT0)
+            .then((response) => {
+                props.onCartUpdate(response);
+                setItemName('');
+                setItemDescription('');
+                setItemCategory('');
+                setItemPrice(0);
+            }); 
+    }
 
     return (
         <Modal
@@ -27,12 +59,21 @@ const AddCartItem = (props) => {
             open={props.isOpen}
             onClose={props.closeModal}>
             <Box sx={style}>
-                <Typography id="modal-modal-title" variant="h6" component="h2">
-                    Text in a modal
-                </Typography>
-                <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                    Some Text Here
-                </Typography>
+                <Stack spacing={1}>
+                    <TitleAndDescription title='Item Name' description='Name of the item' />
+                    <TextInput value={itemName} onChange={(event) => setItemName(event.target.value)} isRequired={true} label='Name' />
+
+                    <TitleAndDescription title='Item Description' description='Description of the item' />
+                    <TextInput value={itemDescription} onChange={(event) => setItemDescription(event.target.value)} isRequired={true} label='Description' />
+
+                    <TitleAndDescription title='Item Category' description='Category of the item' />
+                    <TextInput value={itemCategory} onChange={(event) => setItemCategory(event.target.value)} isRequired={false} label='Category' />
+
+                    <TitleAndDescription title='Add Item' description='Price of the item' />
+                    <NumberInput value={itemPrice} onChange={(event) => setItemPrice(event.target.value)} isRequired={true} label='Price' />
+
+                    <CurvedButton text='Add Item' onClick={() => handleAddItem()} />
+                </Stack>
             </Box>
         </Modal>
     )

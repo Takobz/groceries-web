@@ -71,7 +71,7 @@ const GroceriesAPIService = () => {
                     response.data.data.cartId,
                     response.data.data.name,
                     response.data.data.description,
-                    response.data.data.items
+                    response.data.data.groceryItems
                 );
             }
         });
@@ -93,7 +93,29 @@ const GroceriesAPIService = () => {
         });
     }
 
-    return {getAllCarts, createCart, getCart, deleteCart }
+    const addCartItems = async (addCartItemsDTO) => {
+        return await axios.patch('api/cart/' + addCartItemsDTO.cartId + '/items', {
+            cartId: addCartItemsDTO.cartId,
+            groceryItems: addCartItemsDTO.cartItems
+        }, {
+            baseURL: groceriesBaseUrl,
+            timeout: timeout,
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(response => {
+            if (response.status === 200) {
+                return new GetCartResponseDTO(
+                    response.data.data.cartId,
+                    response.data.data.name,
+                    response.data.data.description,
+                    response.data.data.groceryItems
+                );
+            }
+        });
+    }
+
+    return {getAllCarts, createCart, getCart, deleteCart, addCartItems }
 }
 
 export default GroceriesAPIService

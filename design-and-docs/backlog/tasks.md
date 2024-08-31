@@ -6,7 +6,7 @@
 - ~~Add API Filters to Apply the validation in an abstracted module.~~
 - ~~Add Global Exception Handler~~
 - ~~Add Navigation on edit click of Cart Card.~~
-- Add Cart Items from UI.
+- ~~Add Cart Items from UI.~~
 - Add API logic for copying a cart.
 - Add Share link logic.
 - Delete Cart from the UI.
@@ -14,6 +14,12 @@
 
 ## Current Progress:
 - Build Component to view a single Cart.
+
+## Improvements
+- Have consistent name: item or groceryItem or cartItem
+
+## Known Bugs
+- Home required reload to have a successful of carts.
 
 ### MVP
 - Anyone who visits the site can create cart.

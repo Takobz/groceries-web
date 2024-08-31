@@ -1,13 +1,14 @@
+import * as React from 'react';
 import { Box, Stack } from "@mui/material";
 import TitleAndDescription from "../shared/TitleAndDescription";
 import CurvedButton from "../shared/CurvedButton";
 import CartItem from "./CartItem";
 import AddCartItem from "./AddCartItem";
-import { useState } from "react";
+
 
 const EditCart = (props) => {
-    const cart = props.cart
-    const [openAddItemModal, setOpenAddItemModal] = useState(false);
+    const [cart, setCart] = React.useState(props.cart)
+    const [openAddItemModal, setOpenAddItemModal] = React.useState(false);
 
     const closeModal = () => {
         setOpenAddItemModal(false);
@@ -15,6 +16,12 @@ const EditCart = (props) => {
 
     const openModal = () => {
         setOpenAddItemModal(true);
+    }
+
+    const onCartUpdate = (updatedCart) => {
+        setCart(updatedCart);
+        console.log(updatedCart);
+        setOpenAddItemModal(false);
     }
 
     return (
@@ -29,7 +36,7 @@ const EditCart = (props) => {
                 </Stack>
             </Box>
             
-            <AddCartItem closeModal={closeModal} isOpen={openAddItemModal}/>
+            <AddCartItem cartId={cart.cartId} onCartUpdate={onCartUpdate} closeModal={closeModal} isOpen={openAddItemModal}/>
         </>
 
     );

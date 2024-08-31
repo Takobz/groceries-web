@@ -13,6 +13,7 @@ class CreateCartRequestDTO {
     }
 }
 
+//TODO: Move these two classes to a different "shared" file
 class GetCartResponseDTO {
     constructor(cartId, name, description, items){
         this.cartId = cartId;

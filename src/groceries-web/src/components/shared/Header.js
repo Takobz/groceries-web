@@ -4,10 +4,12 @@ import { AppBar, Toolbar, Typography } from '@mui/material';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
-import { useNavigate } from 'react-router-dom';
+import Button from '@mui/material/Button';
 
 const Header = () => {
-    //TODO: Add Navigation back to home page.
+    const onGroceriesClick = () => {
+        window.location.href = '/';
+    }
 
     return (
     <Box sx={{ flexGrow: 1, mb: 2 }}>
@@ -20,9 +22,12 @@ const Header = () => {
                     sx={{ mr: 2, color: "black" }}>
                     <MenuIcon />
                 </IconButton>
-                <Typography variant="h6" component="div" sx={{ flexGrow: 1, color: "black" }}>
-                    Groceries
-                </Typography>
+                <Button onClick={() => onGroceriesClick()} variant="text" size='large' sx={{ color: "black" }}>
+                    <Typography variant='h6' sx={{ fontWeight: 'bold' }}>
+                        Groceries
+                    </Typography>
+                </Button>
+                <Box sx={{ flexGrow: 1 }} />
                 <AccountCircle sx={{ color: "black" }}/>
             </Toolbar>
         </AppBar>

@@ -1,0 +1,13 @@
+trigger:
+  - main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+- template: ./variables/variables.yml
+
+stages:
+- template: ./templates/stages/deploy-azure-registry.yml
+  parameters:
+    helloWorld: $(helloWorld)

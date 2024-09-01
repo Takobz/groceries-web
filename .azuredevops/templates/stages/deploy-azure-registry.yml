@@ -1,0 +1,14 @@
+parameters:
+  - name: helloWorld
+    type: string
+
+stages:
+- stage: CreateOrUpdateAzureContainerRegistry
+  jobs:
+  - job: UpsertAzureContainerRegistry
+    steps:
+    - task: bash@3
+      displayName: 'Create or update Azure Container Registry'
+      inputs:
+        targetType: 'inline'
+        script: echo '${{ parameters.helloWorld }}'

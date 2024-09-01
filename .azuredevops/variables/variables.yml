@@ -1,0 +1,4 @@
+# store non-sensitive variables here
+variables:
+  - name: helloWorld
+    value: 'Hello, world!'

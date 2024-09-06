@@ -1,14 +1,26 @@
 parameters:
-  - name: helloWorld
+  - name: deploymentMode
     type: string
+    default: 'Incremental'
+  - name: rgLocation
+    type: string
+    default: 'South Africa North'
 
 stages:
 - stage: CreateOrUpdateAzureContainerRegistry
   jobs:
   - job: UpsertAzureContainerRegistry
     steps:
-    - task: bash@3
-      displayName: 'Create or update Azure Container Registry'
+    - task: AzureResourceManagerTemplateDeployment@3
+      displayName: 'Create or Update Azure Container Registry'
       inputs:
-        targetType: 'inline'
-        script: echo '${{ parameters.helloWorld }}'
+        deploymentScope: 'Resource Group'
+        azureResourceManagerConnection: $(serviceConnectionName)
+        action: 'Create Or Update Resource Group'
+        resourceGroupName: $(resourceGroupName)
+        location: ${{ parameters.rgLocation }}
+        templateLocation: 'Linked artifact'
+        csmFile: '$(Pipeline.Workspace)/s/infra-as-code/main.bicep'
+        deploymentMode: ${{ parameters.deploymentMode }}
+        # overrideParameters: >-
+        #   -registryName $(registryName)

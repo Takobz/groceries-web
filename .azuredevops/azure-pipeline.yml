@@ -10,4 +10,5 @@ variables:
 stages:
 - template: ./templates/stages/deploy-azure-registry.yml
   parameters:
-    helloWorld: $(helloWorld)
+    deploymentMode: ${{ variables.deploymentMode }}
+    rgLocation: ${{ variables.location }}

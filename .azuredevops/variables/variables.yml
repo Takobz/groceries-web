@@ -1,4 +1,6 @@
 # store non-sensitive variables here
 variables:
-  - name: helloWorld
-    value: 'Hello, world!'
+  - name: location
+    value: 'South Africa North'
+  - name: deploymentMode
+    value: 'Incremental'

@@ -23,7 +23,6 @@ stages:
         csmFile: '$(Pipeline.Workspace)/s/infra-as-code/main.bicep'
         deploymentMode: ${{ parameters.deploymentMode }}
         overrideParameters: >-
-          -registryName '$(registryName)'
-          -principalId '$(principalId)'
-          -registrySku '$(registrySku)'
-          -enterpriseAppObjectId '$(enterpriseAppObjectId)'
+          -registryName $(registryName)
+          -principalId $(servicePrincipleId)
+          -registrySku $(registrySku)

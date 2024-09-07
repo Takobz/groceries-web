@@ -5,6 +5,6 @@ variables:
   - name: deploymentMode
     value: 'Incremental'
   - name: registryName
-    value: 'acr-container-registry'
+    value: 'acrContainerRegistry'
   - name: registrySku
     value: 'Basic'

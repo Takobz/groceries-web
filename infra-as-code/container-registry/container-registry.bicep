@@ -16,9 +16,12 @@ resource acrResource 'Microsoft.ContainerRegistry/registries@2022-12-01' = {
     name: acrSku
   }
   properties: {
-    adminUserEnabled: false
+    adminUserEnabled: false    
   }
 }
 
 @description('Output the login server property for later use')
 output loginServer string = acrResource.properties.loginServer
+
+@description('Output the container registry name')
+output containerRegistryName string = acrResource.name

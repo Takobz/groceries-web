@@ -22,5 +22,8 @@ stages:
         templateLocation: 'Linked artifact'
         csmFile: '$(Pipeline.Workspace)/s/infra-as-code/main.bicep'
         deploymentMode: ${{ parameters.deploymentMode }}
-        # overrideParameters: >-
-        #   -registryName $(registryName)
+        overrideParameters: >-
+          -registryName '$(registryName)'
+          -principalId '$(principalId)'
+          -registrySku '$(registrySku)'
+          -enterpriseAppObjectId '$(enterpriseAppObjectId)'

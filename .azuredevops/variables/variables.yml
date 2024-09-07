@@ -4,3 +4,7 @@ variables:
     value: 'South Africa North'
   - name: deploymentMode
     value: 'Incremental'
+  - name: registryName
+    value: 'acr-container-registry'
+  - name: registrySku
+    value: 'Basic'

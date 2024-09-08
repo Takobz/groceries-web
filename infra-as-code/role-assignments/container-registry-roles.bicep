@@ -16,6 +16,6 @@ resource roleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
 REMEMBER THIS WHEN DOING RBAC IN THE FUTURE:
 
 The Enterprice Application Linked to the App Registration with principalId was given RBAC roles.
-It was given the Owner Role so that it can be able to write to in resource group's role assignments.
+It was given the Owner Role so that it can be able to write to the resource group's role assignments.
 This was done in the portal and not with IaC as the service principal doesn't have the required permissions to assign roles.
 */

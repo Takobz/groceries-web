@@ -8,6 +8,7 @@ parameters:
 
 stages:
 - stage: CreateOrUpdateAzureContainerRegistry
+  displayName: 'Create or Update Azure Container Registry'
   jobs:
   - job: UpsertAzureContainerRegistry
     steps:

@@ -1,0 +1,77 @@
+parameters:
+  - name: arcName
+    type: string
+    default: 'acrContainerRegistry'
+  - name: postgresImageName
+    type: string
+    default: 'postgres'
+  - name: clientImageName
+    type: string
+    default: 'client'
+  - name: webApiImageName
+    type: string
+    default: 'webapi'
+  - name: nginxImageName
+    type: string
+    default: 'nginx'
+  - name: dependsOn
+    type: object
+    default: []
+
+stages:
+- stage: BuildAndDeployImages
+  displayName: 'Build and Deploy Images'
+  dependsOn: ${{ parameters.dependsOn }}
+  jobs:
+  - job: BuildAndDeploy
+    steps:
+    - task: AzureCLI@2
+      displayName: 'Docker Compose Build'
+      inputs:
+        azureSubscription: $(serviceConnectionName)
+        scriptType: 'bash'
+        scriptLocation: 'inlineScript'
+        inlineScript: |
+          docker-compose -f $(Pipeline.Workspace)/s/src/docker-compose-dev.yml build
+
+    - task: AzureCLI@2
+      displayName: 'Azure CLI Login'
+      inputs:
+        azureSubscription: $(serviceConnectionName)
+        scriptType: 'bash'
+        scriptLocation: 'inlineScript'
+        inlineScript: |
+          az acr login --name $(acrName)
+
+    - task: AzureCLI@2
+      displayName: 'Get ACR Login Server'
+      inputs:
+        azureSubscription: $(serviceConnectionName)
+        scriptType: 'bash'
+        scriptLocation: 'inlineScript'
+        inlineScript: |
+          ACR_LOGIN_SERVER=$(az acr show --name $(acrName) --query loginServer --output tsv)
+
+    - task: AzureCLI@2
+      displayName: 'Tag Images'
+      inputs:
+        azureSubscription: $(serviceConnectionName)
+        scriptType: 'bash'
+        scriptLocation: 'inlineScript'
+        inlineScript: |
+          docker tag ${{ parameters.postgresImageName }}:latest $ACR_LOGIN_SERVER/$(postgresImageName):latest
+          docker tag ${{ parameters.clientImageName }}:latest $ACR_LOGIN_SERVER/$(clientImageName):latest
+          docker tag ${{ parameters.webApiImageName }}:latest $ACR_LOGIN_SERVER/$(webApiImageName):latest
+          docker tag ${{ parameters.nginxImageName }}:latest $ACR_LOGIN_SERVER/$(nginxImageName):latest
+
+    - task: AzureCLI@2
+      displayName: 'Push Images'
+      inputs:
+        azureSubscription: $(serviceConnectionName)
+        scriptType: 'bash'
+        scriptLocation: 'inlineScript'
+        inlineScript: |
+          docker push $ACR_LOGIN_SERVER/${{ parameters.postgresImageName }}:latest
+          docker push $ACR_LOGIN_SERVER/${{ parameters.clientImageName }}:latest
+          docker push $ACR_LOGIN_SERVER/${{ parameters.webApiImageName }}:latest
+          docker push $ACR_LOGIN_SERVER/${{ parameters.nginxImageName }}:latest

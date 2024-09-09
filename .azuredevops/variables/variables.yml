@@ -8,3 +8,11 @@ variables:
     value: 'acrContainerRegistry'
   - name: registrySku
     value: 'Basic'
+  - name: postgresImageName
+    value: 'postgres'
+  - name: clientImageName
+    value: 'client'
+  - name: webApiImageName
+    value: 'webapi'
+  - name: nginxImageName
+    value: 'nginx'

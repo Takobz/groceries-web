@@ -14,7 +14,7 @@
 - Add Share link logic.
 
 ## Current Progress:
-- Build Component to view a single Cart.
+- Add CI/CD to deploy to Azure
 
 ## Improvements
 - Have consistent name: item or groceryItem or cartItem

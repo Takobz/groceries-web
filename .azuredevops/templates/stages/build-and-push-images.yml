@@ -66,6 +66,16 @@ stages:
         scriptLocation: 'inlineScript'
         inlineScript: |
           ACR_LOGIN_SERVER=$(az acr show --name ${{ parameters.arcName }} --query loginServer --output tsv)
+          echo "##vso[task.setvariable variable=ACR_LOGIN_SERVER]$ACR_LOGIN_SERVER"
+
+    - task: AzureCLI@2
+      displayName: 'Docker Images'
+      inputs:
+        azureSubscription: $(serviceConnectionName)
+        scriptType: 'bash'
+        scriptLocation: 'inlineScript'
+        inlineScript: |
+          docker images
 
     - task: AzureCLI@2
       displayName: 'Tag Images'
@@ -74,10 +84,10 @@ stages:
         scriptType: 'bash'
         scriptLocation: 'inlineScript'
         inlineScript: |
-          docker tag ${{ parameters.postgresImageName }}:latest $ACR_LOGIN_SERVER/$(postgresImageName):latest
-          docker tag ${{ parameters.clientImageName }}:latest $ACR_LOGIN_SERVER/$(clientImageName):latest
-          docker tag ${{ parameters.webApiImageName }}:latest $ACR_LOGIN_SERVER/$(webApiImageName):latest
-          docker tag ${{ parameters.nginxImageName }}:latest $ACR_LOGIN_SERVER/$(nginxImageName):latest
+          docker tag ${{ parameters.postgresImageName }}:latest $(ACR_LOGIN_SERVER)/$(postgresImageName):latest
+          docker tag ${{ parameters.clientImageName }}:latest $(ACR_LOGIN_SERVER)/$(clientImageName):latest
+          docker tag ${{ parameters.webApiImageName }}:latest $(ACR_LOGIN_SERVER)/$(webApiImageName):latest
+          docker tag ${{ parameters.nginxImageName }}:latest $(ACR_LOGIN_SERVER)/$(nginxImageName):latest
 
     - task: AzureCLI@2
       displayName: 'Push Images'
@@ -86,7 +96,7 @@ stages:
         scriptType: 'bash'
         scriptLocation: 'inlineScript'
         inlineScript: |
-          docker push $ACR_LOGIN_SERVER/${{ parameters.postgresImageName }}:latest
-          docker push $ACR_LOGIN_SERVER/${{ parameters.clientImageName }}:latest
-          docker push $ACR_LOGIN_SERVER/${{ parameters.webApiImageName }}:latest
-          docker push $ACR_LOGIN_SERVER/${{ parameters.nginxImageName }}:latest
+          docker push $(ACR_LOGIN_SERVER)/${{ parameters.postgresImageName }}:latest
+          docker push $(ACR_LOGIN_SERVER)/${{ parameters.clientImageName }}:latest
+          docker push $(ACR_LOGIN_SERVER)/${{ parameters.webApiImageName }}:latest
+          docker push $(ACR_LOGIN_SERVER)/${{ parameters.nginxImageName }}:latest

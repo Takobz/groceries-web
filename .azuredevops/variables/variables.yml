@@ -11,8 +11,8 @@ variables:
   - name: postgresImageName
     value: 'postgres'
   - name: clientImageName
-    value: 'client'
+    value: 'src_client'
   - name: webApiImageName
-    value: 'webapi'
+    value: 'src_webapi'
   - name: nginxImageName
-    value: 'nginx'
+    value: 'src_nginx'

@@ -1,6 +1,8 @@
 # Groceries Web App
 Read me guide on getting started
 
+[![Build Status](https://dev.azure.com/kobelakhutso/groceries-web/_apis/build/status%2FTakobz.groceries-web?branchName=main)](https://dev.azure.com/kobelakhutso/groceries-web/_build/latest?definitionId=5&branchName=main)
+
 ## How to run locally
 This section goes through how to run the web app locally as full application and individual components.
 

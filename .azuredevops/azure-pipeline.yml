@@ -8,17 +8,25 @@ variables:
 - template: ./variables/variables.yml
 
 stages:
-- template: ./templates/stages/deploy-azure-registry.yml
-  parameters:
-    deploymentMode: ${{ variables.deploymentMode }}
-    rgLocation: ${{ variables.location }}
+# - template: ./templates/stages/deploy-azure-registry.yml
+#   parameters:
+#     deploymentMode: ${{ variables.deploymentMode }}
+#     rgLocation: ${{ variables.location }}
 
-- template: ./templates/stages/build-and-push-images.yml
+# - template: ./templates/stages/build-and-push-images.yml
+#   parameters:
+#     postgresImageName: ${{ variables.postgresImageName }}
+#     clientImageName: ${{ variables.clientImageName }}
+#     webApiImageName: ${{ variables.webApiImageName }}
+#     nginxImageName: ${{ variables.nginxImageName }}
+#     arcName: ${{ variables.registryName }}
+#     dependsOn:
+#       - CreateOrUpdateAzureContainerRegistry
+
+- template: ./templates/stages/deploy-azure-container-instance.yml
   parameters:
-    postgresImageName: ${{ variables.postgresImageName }}
-    clientImageName: ${{ variables.clientImageName }}
-    webApiImageName: ${{ variables.webApiImageName }}
-    nginxImageName: ${{ variables.nginxImageName }}
-    arcName: ${{ variables.registryName }}
-    dependsOn:
-      - CreateOrUpdateAzureContainerRegistry
+    containergroupName: ${{ variables.containerGroupName }}
+    tag: 'latest'
+    containerInstancePublicPort: ${{ variables.nginxPort }}
+    # dependsOn:
+    #   - BuildAndDeployImages

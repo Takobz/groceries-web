@@ -6,13 +6,31 @@ variables:
     value: 'Incremental'
   - name: registryName
     value: 'acrContainerRegistry'
+  - name: containerGroupName
+    value: 'groceryWebConatinerGroup'
   - name: registrySku
     value: 'Basic'
+
   - name: postgresImageName
-    value: 'postgres'
+    value: 'src_postgres'
   - name: clientImageName
     value: 'src_client'
   - name: webApiImageName
     value: 'src_webapi'
   - name: nginxImageName
     value: 'src_nginx'
+
+  - name: postgresPort
+    value: 5432
+  - name: clientPort
+    value: 3000
+  - name: webApiPort
+    value: 5000
+  - name: nginxPort
+    value: 80
+
+  - name: cpuCores
+    value: 1.0
+  - name: memoryInGb
+    value: 1.5
+

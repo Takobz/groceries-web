@@ -4,16 +4,12 @@ parameters:
     default: 'acrContainerRegistry'
   - name: postgresImageName
     type: string
-    default: 'postgres'
   - name: clientImageName
     type: string
-    default: 'client'
   - name: webApiImageName
     type: string
-    default: 'webapi'
   - name: nginxImageName
     type: string
-    default: 'nginx'
   - name: dependsOn
     type: object
     default: []
@@ -78,6 +74,7 @@ stages:
           docker tag ${{ parameters.clientImageName }}:latest $(ACR_LOGIN_SERVER)/$(clientImageName):latest
           docker tag ${{ parameters.webApiImageName }}:latest $(ACR_LOGIN_SERVER)/$(webApiImageName):latest
           docker tag ${{ parameters.nginxImageName }}:latest $(ACR_LOGIN_SERVER)/$(nginxImageName):latest
+          docker tag ${{ parameters.postgresImageName }}:latest $(ACR_LOGIN_SERVER)/$(postgresImageName):latest
 
     - task: AzureCLI@2
       displayName: 'Push Images'
@@ -89,5 +86,4 @@ stages:
           docker push $(ACR_LOGIN_SERVER)/${{ parameters.clientImageName }}:latest
           docker push $(ACR_LOGIN_SERVER)/${{ parameters.webApiImageName }}:latest
           docker push $(ACR_LOGIN_SERVER)/${{ parameters.nginxImageName }}:latest
-
-# postgres will be pulled from and ran on the Azure Container Registry
+          docker push $(ACR_LOGIN_SERVER)/${{ parameters.postgresImageName }}:latest

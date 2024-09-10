@@ -1,0 +1,4 @@
+FROM postgres:latest
+
+#Add code to configure postgres image before start up.
+#Created this file to be able to build image and push to registry

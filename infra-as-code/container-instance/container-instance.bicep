@@ -19,19 +19,25 @@ param port int = 80
 param restartPolicy string = 'OnFailure'
 
 @description('An array with objects that have image name, port and tag')
-param imagesDetails array = []
+param imagesDetails containerGroupProperties[] = []
 
 resource containerRegistry 'Microsoft.ContainerRegistry/registries@2022-12-01' existing = {
   name: containerRegistryName
 }
 
+var containerRegistryIdentity = '/subscriptions/${subscription().subscriptionId}/resourcegroups/${resourceGroup().name}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/${containerRegistry.name}'
+
+//TODO: Create the Group first without containers then later add the containers after role assignment
 resource containerGroup 'Microsoft.ContainerInstance/containerGroups@2023-05-01' = {
   name: containerGroupName
   location: location
+  identity: {
+    type: 'SystemAssigned'
+  }
   properties: {
     containers: [
       for imageDetails in imagesDetails: {
-        name: imageDetails.imageName
+        name: replace(imageDetails.imageName, '_', '-')
         properties: {
           image: '${containerRegistry.properties.loginServer}/${imageDetails.imageName}:${imageDetails.tag}'
           ports: [
@@ -60,6 +66,21 @@ resource containerGroup 'Microsoft.ContainerInstance/containerGroups@2023-05-01'
         }
       ]
     }
+    imageRegistryCredentials: [
+      {
+        server: containerRegistry.properties.loginServer
+        identity: 'SystemAssigned'
+      }
+    ]
+  }
+}
+
+resource aciRoleAssignments 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  name: guid(subscription().subscriptionId, 'container-registry-roles-assignment')
+  properties: {
+    principalId: containerGroup.identity.principalId
+    roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '7f951dda-4ed3-4680-a7ca-43fe172d538d')
+    principalType: 'ServicePrincipal'
   }
 }
 
@@ -68,3 +89,11 @@ output resourceGroupName string = resourceGroup().name
 output resourceId string = containerGroup.id
 output containerIPv4Address string = containerGroup.properties.ipAddress.ip
 output location string = location
+
+type containerGroupProperties = {
+  imageName: string
+  port: int
+  tag: string
+  cpuCores: int
+  memoryInGb: int
+}

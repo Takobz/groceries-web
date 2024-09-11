@@ -10,39 +10,6 @@ parameters:
   - name: dependsOn
     type: object
     default: []
-  - name: imagesDetails
-    type: object
-    default: "[
-      {
-        'imageName': '$(postgresImageName)',
-        'tag': 'latest',
-        'port': $(postgresPort),
-        'cpuCores': $(cpuCores),
-        'memoryInGb': $(memoryInGb)
-      },
-      {
-        'imageName': '$(clientImageName)',
-        'tag': 'latest',
-        'port': $(clientPort),
-        'cpuCores': $(cpuCores),
-        'memoryInGb': $(memoryInGb)
-      },
-      {
-        'imageName': '$(webApiImageName)',
-        'tag': 'latest',
-        'port': $(webApiPort),
-        'cpuCores': $(cpuCores),
-        'memoryInGb': $(memoryInGb)
-      },
-      {
-        'imageName': '$(nginxImageName)',
-        'tag': 'latest',
-        'port': $(nginxPort),
-        'cpuCores': $(cpuCores),
-        'memoryInGb': $(memoryInGb)
-      }
-    ]"
-  
 
 stages:
 - stage: DeployAzureConatinerInstance
@@ -64,6 +31,6 @@ stages:
         deploymentMode: 'Incremental'
         overrideParameters: >-
           -containerGroupName $(containergroupName)
-          -containerRegistryName $(registryName)
-          -port $(nginxPort)
-          -imagesDetails ${{ parameters.imagesDetails }}
+                -containerRegistryName $(registryName)
+                -port $(nginxPort)
+                -imagesDetails [{"imageName": "$(postgresImageName)", "tag": "latest", "port": $(postgresPort), "cpuCores": $(cpuCores), "memoryInGb": $(memoryInGb)}, {"imageName": "$(clientImageName)", "tag": "latest", "port": $(clientPort), "cpuCores": $(cpuCores), "memoryInGb": $(memoryInGb)}, {"imageName": "$(webApiImageName)", "tag": "latest", "port": $(webApiPort), "cpuCores": $(cpuCores), "memoryInGb": $(memoryInGb)}, {"imageName": "$(nginxImageName)", "tag": "latest", "port": $(nginxPort), "cpuCores": $(cpuCores), "memoryInGb": $(memoryInGb)}]

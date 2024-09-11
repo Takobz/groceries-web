@@ -32,5 +32,5 @@ variables:
   - name: cpuCores
     value: 1.0
   - name: memoryInGb
-    value: 1.5
+    value: 2
 

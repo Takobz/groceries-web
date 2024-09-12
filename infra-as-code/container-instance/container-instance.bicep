@@ -23,7 +23,7 @@ param port int = 80
   'Never'
   'OnFailure'
 ])
-param restartPolicy string = 'OnFailure'
+param restartPolicy string = 'Never'
 
 @description('An array with objects that have image name, port and tag')
 param imagesDetails containerGroupProperties[] = []
@@ -37,22 +37,36 @@ resource containerGroup 'Microsoft.ContainerInstance/containerGroups@2023-05-01'
   location: location
   properties: {
     containers: [
-      for imageDetails in imagesDetails: {
-        name: replace(imageDetails.imageName, '_', '-')
+      {
+        name: 'postgres'
         properties: {
-          image: '${containerRegistry.properties.loginServer}/${imageDetails.imageName}:${imageDetails.tag}'
+          image: '${containerRegistry.properties.loginServer}/src_postgres:latest'
           ports: [
             {
-              port: imageDetails.port
+              port: 5432
               protocol: 'TCP'
             }
           ]
           resources: {
             requests: {
-              cpu: imageDetails.cpuCores
-              memoryInGB: imageDetails.memoryInGb
+              cpu: 4
+              memoryInGB: 5
             }
           }
+          environmentVariables: [
+            {
+              name: 'POSTGRES_USER'
+              value: 'postgres'
+            }
+            {
+              name: 'POSTGRES_PASSWORD'
+              value: 'postgres'
+            }
+            {
+              name: 'POSTGRES_DB'
+              value: 'postgres'
+            }
+          ]
         }
       }
     ]
@@ -62,7 +76,7 @@ resource containerGroup 'Microsoft.ContainerInstance/containerGroups@2023-05-01'
       type: 'Public'
       ports: [
         {
-          port: port
+          port: 5432
           protocol: 'TCP'
         }
       ]
@@ -76,6 +90,51 @@ resource containerGroup 'Microsoft.ContainerInstance/containerGroups@2023-05-01'
     ]
   }
 }
+
+// resource containerGroup 'Microsoft.ContainerInstance/containerGroups@2023-05-01' = {
+//   name: containerGroupName
+//   location: location
+//   properties: {
+//     containers: [
+//       for imageDetails in imagesDetails: {
+//         name: replace(imageDetails.imageName, '_', '-')
+//         properties: {
+//           image: '${containerRegistry.properties.loginServer}/${imageDetails.imageName}:${imageDetails.tag}'
+//           ports: [
+//             {
+//               port: imageDetails.port
+//               protocol: 'TCP'
+//             }
+//           ]
+//           resources: {
+//             requests: {
+//               cpu: imageDetails.cpuCores
+//               memoryInGB: imageDetails.memoryInGb
+//             }
+//           }
+//         }
+//       }
+//     ]
+//     osType: 'Linux'
+//     restartPolicy: restartPolicy
+//     ipAddress: {
+//       type: 'Public'
+//       ports: [
+//         {
+//           port: port
+//           protocol: 'TCP'
+//         }
+//       ]
+//     }
+//     imageRegistryCredentials: [
+//       {
+//         server: containerRegistry.properties.loginServer
+//         username: containerRegistryServicePrincipalId
+//         password: containerRegistryServicePrincipalSecret
+//       }
+//     ]
+//   }
+// }
 
 output name string = containerGroup.name
 output resourceGroupName string = resourceGroup().name

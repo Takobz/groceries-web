@@ -27,7 +27,6 @@ resource containerRegistry 'Microsoft.ContainerRegistry/registries@2022-12-01' e
 
 var containerRegistryIdentity = '/subscriptions/${subscription().subscriptionId}/resourcegroups/${resourceGroup().name}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/${containerRegistry.name}'
 
-//TODO: Create the Group first without containers then later add the containers after role assignment
 resource containerGroup 'Microsoft.ContainerInstance/containerGroups@2023-05-01' = {
   name: containerGroupName
   location: location

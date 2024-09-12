@@ -33,4 +33,6 @@ stages:
           -containerGroupName $(containergroupName)
                 -containerRegistryName $(registryName)
                 -port $(nginxPort)
+                -containerRegistryServicePrincipalId $(servicePrincipleId)
+                -containerRegistryServicePrincipalSecret $(servicePrincipalSecret)
                 -imagesDetails [{"imageName": "$(postgresImageName)", "tag": "latest", "port": $(postgresPort), "cpuCores": $(cpuCores), "memoryInGb": $(memoryInGb)}, {"imageName": "$(clientImageName)", "tag": "latest", "port": $(clientPort), "cpuCores": $(cpuCores), "memoryInGb": $(memoryInGb)}, {"imageName": "$(webApiImageName)", "tag": "latest", "port": $(webApiPort), "cpuCores": $(cpuCores), "memoryInGb": $(memoryInGb)}, {"imageName": "$(nginxImageName)", "tag": "latest", "port": $(nginxPort), "cpuCores": $(cpuCores), "memoryInGb": $(memoryInGb)}]

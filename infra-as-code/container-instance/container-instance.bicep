@@ -1,3 +1,10 @@
+@description('Service Principle With Pull Access to Container Registry')
+param containerRegistryServicePrincipalId string
+
+@secure()
+@description('Service Principle With Pull Access to Container Registry')
+param containerRegistryServicePrincipalSecret string
+
 @description('Name for the container group')
 param containerGroupName string
 
@@ -25,14 +32,9 @@ resource containerRegistry 'Microsoft.ContainerRegistry/registries@2022-12-01' e
   name: containerRegistryName
 }
 
-var containerRegistryIdentity = '/subscriptions/${subscription().subscriptionId}/resourcegroups/${resourceGroup().name}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/${containerRegistry.name}'
-
 resource containerGroup 'Microsoft.ContainerInstance/containerGroups@2023-05-01' = {
   name: containerGroupName
   location: location
-  identity: {
-    type: 'SystemAssigned'
-  }
   properties: {
     containers: [
       for imageDetails in imagesDetails: {
@@ -68,18 +70,10 @@ resource containerGroup 'Microsoft.ContainerInstance/containerGroups@2023-05-01'
     imageRegistryCredentials: [
       {
         server: containerRegistry.properties.loginServer
-        identity: 'SystemAssigned'
+        username: containerRegistryServicePrincipalId
+        password: containerRegistryServicePrincipalSecret
       }
     ]
-  }
-}
-
-resource aciRoleAssignments 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
-  name: guid(subscription().subscriptionId, 'container-registry-roles-assignment')
-  properties: {
-    principalId: containerGroup.identity.principalId
-    roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '7f951dda-4ed3-4680-a7ca-43fe172d538d')
-    principalType: 'ServicePrincipal'
   }
 }
 

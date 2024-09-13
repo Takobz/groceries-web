@@ -23,7 +23,7 @@ param port int = 80
   'Never'
   'OnFailure'
 ])
-param restartPolicy string = 'Never'
+param restartPolicy string = 'OnFailure'
 
 @description('An array with objects that have image name, port and tag')
 param imagesDetails containerGroupProperties[] = []
@@ -32,6 +32,7 @@ resource containerRegistry 'Microsoft.ContainerRegistry/registries@2022-12-01' e
   name: containerRegistryName
 }
 
+//This is temp just to test the container group
 resource containerGroup 'Microsoft.ContainerInstance/containerGroups@2023-05-01' = {
   name: containerGroupName
   location: location
@@ -49,22 +50,70 @@ resource containerGroup 'Microsoft.ContainerInstance/containerGroups@2023-05-01'
           ]
           resources: {
             requests: {
-              cpu: 4
-              memoryInGB: 5
+              cpu: 1
+              memoryInGB: 2
             }
           }
           environmentVariables: [
-            {
-              name: 'POSTGRES_USER'
-              value: 'postgres'
-            }
             {
               name: 'POSTGRES_PASSWORD'
               value: 'postgres'
             }
             {
               name: 'POSTGRES_DB'
+              value: 'groceries_database'
+            }
+          ]
+        }
+      }
+      {
+        name: 'webapi'
+        properties: {
+          image: '${containerRegistry.properties.loginServer}/src_webapi:latest'
+          ports: [
+            {
+              port: 5000
+              protocol: 'TCP'
+            }
+          ]
+          resources: {
+            requests: {
+              cpu: 1
+              memoryInGB: 2
+            }
+          }
+          environmentVariables: [
+            {
+              name: 'PGUSER'
               value: 'postgres'
+            }
+            {
+              name: 'PGPASSWORD'
+              value: 'postgres_password'
+            }
+            {
+              name: 'PGDB'
+              value: 'groceries_database'
+            }
+            {
+              name: 'PGHOST'
+              value: 'localhost'
+            }
+            {
+              name: 'PGPORT'
+              value: '5432'
+            }
+            {
+              name: 'ASPNETCORE_ENVIRONMENT'
+              value: 'Development'
+            }
+            {
+              name: 'ASPNETCORE_URLS'
+              value: 'http://+:5000'
+            }
+            {
+              name: 'DOTNET_RUNNING_IN_CONTAINER'
+              value: 'true'
             }
           ]
         }
@@ -76,7 +125,7 @@ resource containerGroup 'Microsoft.ContainerInstance/containerGroups@2023-05-01'
       type: 'Public'
       ports: [
         {
-          port: 5432
+          port: 5000
           protocol: 'TCP'
         }
       ]

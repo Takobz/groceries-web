@@ -21,7 +21,7 @@ stages:
         resourceGroupName: $(resourceGroupName)
         location: ${{ parameters.rgLocation }}
         templateLocation: 'Linked artifact'
-        csmFile: '$(Pipeline.Workspace)/s/infra-as-code/main.bicep'
+        csmFile: '$(Pipeline.Workspace)/s/infra-as-code/container-registry/main.bicep'
         deploymentMode: ${{ parameters.deploymentMode }}
         overrideParameters: >-
           -registryName $(registryName)

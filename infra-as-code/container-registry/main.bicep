@@ -2,7 +2,7 @@ param principalId string
 param registryName string
 param registrySku string
 
-module containerRegistry 'container-registry/container-registry.bicep' = {
+module containerRegistry 'container-registry.bicep' = {
   name: 'containerRegistry'
   params: {
     acrName: registryName
@@ -11,7 +11,7 @@ module containerRegistry 'container-registry/container-registry.bicep' = {
   }
 }
 
-module containerRegistryRoles 'role-assignments/container-registry-roles.bicep' = {
+module containerRegistryRoles 'container-registry-roles.bicep' = {
   name: 'containerRegistryRoles'
   params: {
     principalId: principalId

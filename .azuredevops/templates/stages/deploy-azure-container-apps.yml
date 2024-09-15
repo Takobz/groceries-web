@@ -1,0 +1,39 @@
+parameters:
+  - name: deploymentMode
+    type: string
+    default: 'Incremental'
+  - name: rgLocation
+    type: string
+    default: 'South Africa North'
+  - name: dependsOn
+    type: object
+    default: []
+
+stages:
+- stage: DeployConatinerApps
+  displayName: 'Deploy Container Apps'
+  dependsOn: ${{ parameters.dependsOn }}
+  jobs:
+  - job: DeployContainerApps
+    steps:
+    - task: AzureResourceManagerTemplateDeployment@3
+      displayName: 'Deploy Container Apps'
+      inputs:
+        deploymentScope: 'Resource Group'
+        azureResourceManagerConnection: $(serviceConnectionName)
+        action: 'Create Or Update Resource Group'
+        resourceGroupName: $(resourceGroupName)
+        location: ${{ parameters.rgLocation }}
+        templateLocation: 'Linked artifact'
+        csmFile: '$(Pipeline.Workspace)/s/infra-as-code/container-apps/main.bicep'
+        deploymentMode: ${{ parameters.deploymentMode }}
+        overrideParameters: >-
+          -containerRegistryName $(registryName)
+          -containerAppsEnvironmentName $(containerAppsEnvironmentName)
+          -postgresContainerAppName $(postgresContainerAppName)
+          -postgresImage $(postgresImageName)
+          -postgresTargetPort $(postgresPort)
+          -postgresCpu $(cpuCores)
+          -postgresMemory $(memoryInGb)
+          -containerRegistryUserAssignedIdentityId $(servicePrincipleId)
+          -postgresEnvironmentVariables [{ "name": "POSTGRES_PASSWORD", "value": "$(postgresKey)" }, { "name": "POSTGRES_DB", "value": "$(databaseName)" }]

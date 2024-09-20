@@ -10,6 +10,8 @@ param postgresImage string
 
 param postgresTargetPort int = 5432
 
+param postgresImageTag string = 'latest'
+
 param postgresCpu string
 
 param postgresMemory string = '1Gi'
@@ -19,6 +21,7 @@ param containerRegistryUserAssignedIdentityId string
 param environmentVariables array = []
 
 param containerRegistryLoginServer string
+
 
 resource PostgresConatinerApp 'Microsoft.App/containerApps@2024-03-01' = {
   name: postgresContainerAppName
@@ -47,7 +50,7 @@ resource PostgresConatinerApp 'Microsoft.App/containerApps@2024-03-01' = {
       containers: [
         {
           name: postgresContainerAppName
-          image: postgresImage
+          image: '${containerRegistryLoginServer}/${postgresImage}:${postgresImageTag}'
           resources: {
             cpu: json(postgresCpu)
             memory: postgresMemory

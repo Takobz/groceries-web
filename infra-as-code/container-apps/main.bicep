@@ -21,10 +21,10 @@ resource managedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-
 
 var acrPullRoleDefinitionGuid = '7f951dda-4ed3-4680-a7ca-43fe172d538d'
 resource pullImagesRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
-  name: guid(subscription().subscriptionId, 'pullImagesRoleAssignment')
+  name: guid(managedIdentity.id, acrPullRoleDefinitionGuid)
   properties: {
     principalId: managedIdentity.properties.principalId
-    roleDefinitionId: subscriptionResourceId('Microsft.Authorization/roleDefinitions', acrPullRoleDefinitionGuid)
+    roleDefinitionId: resourceId('Microsoft.Authorization/roleDefinitions', acrPullRoleDefinitionGuid)
     principalType: 'ServicePrincipal'
   }
 }
@@ -41,12 +41,16 @@ module postgres 'postgres-app.bicep' = {
   params: {
     postgresContainerAppName: postgresContainerAppName
     managedEnvironmentId: containerAppsEnvironment.outputs.containerAppsEnvironmentId
-    postgresImage: '${postgresImage}:${postgresImageTag}'
+    postgresImage: postgresImage
     postgresTargetPort: postgresTargetPort
     postgresCpu: postgresCpu
     postgresMemory: postgresMemory
     containerRegistryUserAssignedIdentityId: managedIdentity.id
     environmentVariables: postgresEnvironmentVariables
     containerRegistryLoginServer: containerRegistry.properties.loginServer
+    postgresImageTag: postgresImageTag
   }
+  dependsOn: [
+    pullImagesRoleAssignment
+  ]
 }

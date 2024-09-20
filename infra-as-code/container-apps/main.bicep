@@ -7,11 +7,16 @@ param postgresTargetPort int = 5432
 param postgresCpu string
 param postgresMemory string = '1Gi'
 param postgresImageTag string = 'latest'
-param containerRegistryUserAssignedIdentityId string
+param managedIdentityName string
 param postgresEnvironmentVariables array = []
 
 resource containerRegistry 'Microsoft.ContainerRegistry/registries@2022-12-01' existing = {
   name: containerRegistryName
+}
+
+resource managedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' = {
+  name: managedIdentityName
+  location: resourceGroup().location
 }
 
 module containerAppsEnvironment 'container-apps-environment.bicep' = {
@@ -30,7 +35,7 @@ module postgres 'postgres-app.bicep' = {
     postgresTargetPort: postgresTargetPort
     postgresCpu: postgresCpu
     postgresMemory: postgresMemory
-    containerRegistryUserAssignedIdentityId: containerRegistryUserAssignedIdentityId
+    containerRegistryUserAssignedIdentityId: managedIdentity.id
     environmentVariables: postgresEnvironmentVariables
     containerRegistryLoginServer: containerRegistry.properties.loginServer
   }

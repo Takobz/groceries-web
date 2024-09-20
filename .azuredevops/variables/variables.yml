@@ -10,6 +10,8 @@ variables:
     value: 'groceryWebConatinerEnv'
   - name: registrySku
     value: 'Basic'
+  - name: managedIdentityName
+    value: 'acrContainerRegistryIdentity'
 
   - name: postgresContainerAppName
     value: 'postgres-container-app'

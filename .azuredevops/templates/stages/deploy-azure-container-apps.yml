@@ -35,5 +35,5 @@ stages:
           -postgresTargetPort $(postgresPort)
           -postgresCpu $(cpuCores)
           -postgresMemory $(memoryInGb)
-          -containerRegistryUserAssignedIdentityId $(servicePrincipleId)
+          -managedIdentityName $(managedIdentityName)
           -postgresEnvironmentVariables [{ "name": "POSTGRES_PASSWORD", "value": "$(postgresKey)" }, { "name": "POSTGRES_DB", "value": "$(databaseName)" }]

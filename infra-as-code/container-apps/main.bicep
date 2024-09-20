@@ -4,7 +4,7 @@ param containerAppsEnvironmentName string
 param postgresContainerAppName string
 param postgresImage string
 param postgresTargetPort int = 5432
-param postgresCpu int = 1
+param postgresCpu string
 param postgresMemory string = '1Gi'
 param postgresImageTag string = 'latest'
 param containerRegistryUserAssignedIdentityId string

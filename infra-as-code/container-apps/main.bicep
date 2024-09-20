@@ -19,6 +19,15 @@ resource managedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-
   location: resourceGroup().location
 }
 
+var acrPullRoleDefinitionGuid = '7f951dda-4ed3-4680-a7ca-43fe172d538d'
+resource pullImagesRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  name: guid(subscription().subscriptionId, 'pullImagesRoleAssignment')
+  properties: {
+    principalId: managedIdentity.properties.principalId
+    roleDefinitionId: subscriptionResourceId('Microsft.Authorization/roleDefinitions', acrPullRoleDefinitionGuid)
+  }
+}
+
 module containerAppsEnvironment 'container-apps-environment.bicep' = {
   name: 'containerAppsEnvironment'
   params: {

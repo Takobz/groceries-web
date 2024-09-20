@@ -34,7 +34,7 @@ variables:
     value: 80
 
   - name: cpuCores
-    value: 0.5
+    value: '0.5'
   - name: memoryInGb
     value: '1Gi'
 

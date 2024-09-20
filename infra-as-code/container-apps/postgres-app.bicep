@@ -10,7 +10,7 @@ param postgresImage string
 
 param postgresTargetPort int = 5432
 
-param postgresCpu int = 1
+param postgresCpu string
 
 param postgresMemory string = '1Gi'
 
@@ -49,7 +49,7 @@ resource PostgresConatinerApp 'Microsoft.App/containerApps@2024-03-01' = {
           name: postgresContainerAppName
           image: postgresImage
           resources: {
-            cpu: postgresCpu
+            cpu: json(postgresCpu)
             memory: postgresMemory
           }
           env: environmentVariables

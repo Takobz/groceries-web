@@ -40,7 +40,7 @@ module postgres 'postgres-app.bicep' = {
   params: {
     postgresContainerAppName: postgresContainerAppName
     managedEnvironmentId: containerAppsEnvironment.outputs.containerAppsEnvironmentId
-    postgresImage: '${containerRegistry.properties.loginServer}/${postgresImage}:${postgresImageTag}'
+    postgresImage: '${postgresImage}:${postgresImageTag}'
     postgresTargetPort: postgresTargetPort
     postgresCpu: postgresCpu
     postgresMemory: postgresMemory

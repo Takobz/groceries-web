@@ -12,7 +12,7 @@ variables:
     value: 'Basic'
 
   - name: postgresContainerAppName
-    value: 'postgresContainerApp'
+    value: 'postgres-container-app'
   - name: postgresImageName
     value: 'src_postgres'
   - name: postgresPort

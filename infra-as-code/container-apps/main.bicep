@@ -25,6 +25,7 @@ resource pullImagesRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-
   properties: {
     principalId: managedIdentity.properties.principalId
     roleDefinitionId: subscriptionResourceId('Microsft.Authorization/roleDefinitions', acrPullRoleDefinitionGuid)
+    principalType: 'ServicePrincipal'
   }
 }
 

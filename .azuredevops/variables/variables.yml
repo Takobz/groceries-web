@@ -20,18 +20,22 @@ variables:
   - name: postgresPort
     value: 5432
 
-  - name: clientImageName
-    value: 'src_client'
+  - name: webApiContainerAppName
+    value: 'grocery-api-container-app'
   - name: webApiImageName
     value: 'src_webapi'
+  - name: webApiPort
+    value: 5000
+  
+
+  - name: clientImageName
+    value: 'src_client'
   - name: nginxImageName
     value: 'src_nginx'
 
-
   - name: clientPort
     value: 3000
-  - name: webApiPort
-    value: 5000
+  
   - name: nginxPort
     value: 80
 

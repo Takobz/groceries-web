@@ -1,5 +1,6 @@
 param containerRegistryName string
 param containerAppsEnvironmentName string
+param managedIdentityName string
 
 param postgresContainerAppName string
 param postgresImage string
@@ -7,8 +8,15 @@ param postgresTargetPort int = 5432
 param postgresCpu string
 param postgresMemory string = '1Gi'
 param postgresImageTag string = 'latest'
-param managedIdentityName string
 param postgresEnvironmentVariables array = []
+
+param webApiContainerAppName string
+param webApiImage string
+param webApiTargetPort int
+param webApiCpu string
+param webApiMemory string = '1Gi'
+param webApiImageTag string = 'latest'
+param webApiEnvironmentVariables array = []
 
 resource containerRegistry 'Microsoft.ContainerRegistry/registries@2022-12-01' existing = {
   name: containerRegistryName
@@ -52,5 +60,24 @@ module postgres 'postgres-app.bicep' = {
   }
   dependsOn: [
     pullImagesRoleAssignment
+  ]
+}
+
+module webApi 'webapi-app.bicep' = {
+  name: 'webApi'
+  params: {
+    webApiContainerAppName: webApiContainerAppName
+    managedEnvironmentId: containerAppsEnvironment.outputs.containerAppsEnvironmentId
+    webapiImage: webApiImage
+    webApiTargetPort: webApiTargetPort
+    webApiCpu: webApiCpu
+    webApiMemory: webApiMemory
+    webApiImageTag: webApiImageTag
+    containerRegistryUserAssignedIdentityId: managedIdentity.id
+    environmentVariables: webApiEnvironmentVariables
+    containerRegistryLoginServer: containerRegistry.properties.loginServer
+  }
+  dependsOn: [
+    postgres
   ]
 }

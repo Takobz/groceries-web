@@ -9,6 +9,7 @@ parameters:
     type: object
     default: []
 
+# Add A Key Vault For Some Of these env variables
 stages:
 - stage: DeployConatinerApps
   displayName: 'Deploy Container Apps'
@@ -37,3 +38,9 @@ stages:
           -postgresMemory $(memoryInGb)
           -managedIdentityName $(managedIdentityName)
           -postgresEnvironmentVariables [{ "name": "POSTGRES_PASSWORD", "value": "$(postgresKey)" }, { "name": "POSTGRES_DB", "value": "$(databaseName)" }]
+          -webApiContainerAppName $(webApiContainerAppName)
+          -webApiImage $(webApiImageName)
+          -webApiTargetPort $(webApiPort)
+          -webApiCpu $(cpuCores)
+          -webApiMemory $(memoryInGb)
+          -webApiEnvironmentVariables [{ "name": "ASPNETCORE_ENVIRONMENT", "value": "Development" }, { "name": "DOTNET_RUNNING_IN_CONTAINER", "value": "true" }, { "name": "PGUSER", "value": "$(postgresUser)" }, { "name": "PGPASSWORD", "value": "$(postgresKey)" }, { "name": "PGDB", "value": "$(databaseName)" }, { "name": "PGHOST", "value": "http://$(postgresContainerAppName)" }, { "name": "PGPORT", "value": "$(postgresPort)" }]

@@ -34,6 +34,7 @@ stages:
           sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
           sudo apt-get update
           sudo apt-get install -y docker-ce
+          export DOCKER_BUILDKIT=0
 
     - task: AzureCLI@2
       displayName: 'Docker Compose Build'
@@ -43,6 +44,7 @@ stages:
         scriptLocation: 'inlineScript'
         inlineScript: |
           sudo apt-get install -y docker-compose
+          export COMPOSE_DOCKER_CLI_BUILD=0
           docker-compose -f $(Pipeline.Workspace)/s/src/docker-compose-dev.yml build
 
     - task: AzureCLI@2

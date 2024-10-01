@@ -36,7 +36,7 @@ resource PostgresConatinerApp 'Microsoft.App/containerApps@2024-03-01' = {
     managedEnvironmentId: managedEnvironmentId
     configuration: {
       ingress: {
-        external: false
+        external: true
         targetPort: postgresTargetPort
       }
       registries: [

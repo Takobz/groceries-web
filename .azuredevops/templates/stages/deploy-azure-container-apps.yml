@@ -10,6 +10,7 @@ parameters:
     default: []
 
 # Add A Key Vault For Some Of these env variables
+# Try this: $(postgresContainerAppName).$(containerAppsEnvironmentName).svc.cluster.local
 stages:
 - stage: DeployConatinerApps
   displayName: 'Deploy Container Apps'
@@ -43,4 +44,4 @@ stages:
           -webApiTargetPort $(webApiPort)
           -webApiCpu $(cpuCores)
           -webApiMemory $(memoryInGb)
-          -webApiEnvironmentVariables [{ "name": "ASPNETCORE_ENVIRONMENT", "value": "Development" }, { "name": "DOTNET_RUNNING_IN_CONTAINER", "value": "true" }, { "name": "PGUSER", "value": "$(postgresUser)" }, { "name": "PGPASSWORD", "value": "$(postgresKey)" }, { "name": "PGDB", "value": "$(databaseName)" }, { "name": "PGHOST", "value": "$(postgresContainerAppName)" }, { "name": "PGPORT", "value": "$(postgresPort)" }]
+          -webApiEnvironmentVariables [{ "name": "ASPNETCORE_ENVIRONMENT", "value": "Development" }, { "name": "DOTNET_RUNNING_IN_CONTAINER", "value": "true" }, { "name": "PGUSER", "value": "$(postgresUser)" }, { "name": "PGPASSWORD", "value": "$(postgresKey)" }, { "name": "PGDB", "value": "$(databaseName)" }, { "name": "PGHOST", "value": "$(postgresContainerAppName).$(containerAppsEnvironmentName).svc.cluster.local" }, { "name": "PGPORT", "value": "$(postgresPort)" }]

@@ -44,6 +44,7 @@ module containerAppsEnvironment 'container-apps-environment.bicep' = {
   }
 }
 
+//remove this and use a storage service.
 module postgres 'postgres-app.bicep' = {
   name: 'postgres'
   params: {

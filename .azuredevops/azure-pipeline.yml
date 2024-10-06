@@ -23,9 +23,12 @@ stages:
 #     dependsOn:
 #       - CreateOrUpdateAzureContainerRegistry
 
+- template: ./templates/stages/deploy-azure-sql.yml
+
 - template: ./templates/stages/deploy-azure-container-apps.yml
   parameters:
     deploymentMode: ${{ variables.deploymentMode }}
     rgLocation: ${{ variables.location }}
-    # dependsOn:
-    #   - BuildAndDeployImages
+    dependsOn:
+      - DeployAzureSQL
+      # - BuildAndDeployImages

@@ -1,0 +1,34 @@
+parameters:
+  - name: rgLocation
+    type: string
+    default: 'South Africa North'
+  - name: deploymentMode
+    type: string
+    default: 'Incremental'
+  - name: dependsOn
+    type: object
+    default: []
+
+stages:
+- stage: DeployAzureSQL
+  displayName: 'Deploy Azure SQL'
+  dependsOn: ${{ parameters.dependsOn }}
+  jobs:
+  - job: DeployAzureSQL
+    steps:
+    - task: AzureResourceManagerTemplateDeployment@3
+      displayName: 'Deploy Azure SQL'
+      inputs:
+        deploymentScope: 'Resource Group'
+        azureResourceManagerConnection: $(serviceConnectionName)
+        action: 'Create Or Update Resource Group'
+        resourceGroupName: $(resourceGroupName)
+        location: ${{ parameters.rgLocation }}
+        templateLocation: 'Linked artifact'
+        csmFile: '$(Pipeline.Workspace)/s/infra-as-code/azure-sql/main.bicep'
+        deploymentMode: ${{ parameters.deploymentMode }}
+        overrideParameters: >-
+          -serverName $(databaseServerName)
+          -databaseName $(databaseName)
+          -administratorLogin $(databaseUser)
+          -administratorLoginPassword $(adminPassword)

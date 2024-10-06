@@ -2,14 +2,6 @@ param containerRegistryName string
 param containerAppsEnvironmentName string
 param managedIdentityName string
 
-param postgresContainerAppName string
-param postgresImage string
-param postgresTargetPort int = 5432
-param postgresCpu string
-param postgresMemory string = '1Gi'
-param postgresImageTag string = 'latest'
-param postgresEnvironmentVariables array = []
-
 param webApiContainerAppName string
 param webApiImage string
 param webApiTargetPort int
@@ -44,26 +36,6 @@ module containerAppsEnvironment 'container-apps-environment.bicep' = {
   }
 }
 
-//remove this and use a storage service.
-module postgres 'postgres-app.bicep' = {
-  name: 'postgres'
-  params: {
-    postgresContainerAppName: postgresContainerAppName
-    managedEnvironmentId: containerAppsEnvironment.outputs.containerAppsEnvironmentId
-    postgresImage: postgresImage
-    postgresTargetPort: postgresTargetPort
-    postgresCpu: postgresCpu
-    postgresMemory: postgresMemory
-    containerRegistryUserAssignedIdentityId: managedIdentity.id
-    environmentVariables: postgresEnvironmentVariables
-    containerRegistryLoginServer: containerRegistry.properties.loginServer
-    postgresImageTag: postgresImageTag
-  }
-  dependsOn: [
-    pullImagesRoleAssignment
-  ]
-}
-
 module webApi 'webapi-app.bicep' = {
   name: 'webApi'
   params: {
@@ -78,7 +50,4 @@ module webApi 'webapi-app.bicep' = {
     environmentVariables: webApiEnvironmentVariables
     containerRegistryLoginServer: containerRegistry.properties.loginServer
   }
-  dependsOn: [
-    postgres
-  ]
 }

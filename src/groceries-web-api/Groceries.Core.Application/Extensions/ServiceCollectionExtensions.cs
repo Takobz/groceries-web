@@ -10,12 +10,26 @@ namespace Groceries.Core.Application.Extensions
 {
     public static class ServiceCollectionExtensions
     {
+        private const string azureSqlConnectionStringOption = "AZURE_SQL_CONNECTIONSTRING";
+
         public static IServiceCollection AddPostgresDbContext(this IServiceCollection services, PostgresOptions postgresOptions)
         {
             services.AddDbContext<GroceriesDbContext>(options =>
             {
                 options.UseNpgsql(
                     $"Host={postgresOptions.Host};Database={postgresOptions.Database};Username={postgresOptions.Username};Password={postgresOptions.Password}");
+            });
+            services.AddTransient<IGroceriesDbContext, GroceriesDbContext>();
+
+            return services;
+        }
+
+        public static IServiceCollection AddAzureSQLDbContext(this IServiceCollection services, IConfiguration configuration)
+        {
+            var azureSqlConnectionString = configuration.GetConnectionString(azureSqlConnectionStringOption);
+            services.AddDbContext<GroceriesDbContext>(options =>
+            {
+                options.UseSqlServer(azureSqlConnectionString);
             });
             services.AddTransient<IGroceriesDbContext, GroceriesDbContext>();
 

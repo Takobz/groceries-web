@@ -8,6 +8,9 @@ parameters:
   - name: dependsOn
     type: object
     default: []
+  - name: databaseConnectionString
+    type: string
+    default: ''
 
 # Add A Key Vault For Some Of these env variables
 # Try this: postgres-app.<environment-name>.svc.cluster.local
@@ -32,16 +35,12 @@ stages:
         overrideParameters: >-
           -containerRegistryName $(registryName)
           -containerAppsEnvironmentName $(containerAppsEnvironmentName)
-          -postgresContainerAppName $(postgresContainerAppName)
-          -postgresImage $(postgresImageName)
-          -postgresTargetPort $(postgresPort)
-          -postgresCpu $(cpuCores)
-          -postgresMemory $(memoryInGb)
           -managedIdentityName $(managedIdentityName)
-          -postgresEnvironmentVariables [{ "name": "POSTGRES_PASSWORD", "value": "$(postgresKey)" }, { "name": "POSTGRES_DB", "value": "$(databaseName)" }]
           -webApiContainerAppName $(webApiContainerAppName)
           -webApiImage $(webApiImageName)
           -webApiTargetPort $(webApiPort)
           -webApiCpu $(cpuCores)
           -webApiMemory $(memoryInGb)
-          -webApiEnvironmentVariables [{ "name": "ASPNETCORE_ENVIRONMENT", "value": "Development" }, { "name": "DOTNET_RUNNING_IN_CONTAINER", "value": "true" }, { "name": "PGUSER", "value": "$(postgresUser)" }, { "name": "PGPASSWORD", "value": "$(postgresKey)" }, { "name": "PGDB", "value": "$(databaseName)" }, { "name": "PGHOST", "value": "$(postgresContainerAppName)" }, { "name": "PGPORT", "value": "$(postgresPort)" }]
+          -webApiEnvironmentVariables [{ "name": "ASPNETCORE_ENVIRONMENT", "value": "Production" }, { "name": "DOTNET_RUNNING_IN_CONTAINER", "value": "true" }, { "name": "ConnectionStrings__AZURE_SQL_CONNECTIONSTRING", "value": "Server=tcp:$(databaseServerName).database.windows.net,1433;Initial Catalog=$(databaseName);Persist Security Info=False;User ID=$(databaseUser);Password=$(databasePass);MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;" }]
+
+#[reference(resourceId('Microsoft.Sql/servers/databases', databaseServerName, databaseName), '2020-08-01-preview', 'Full').connectionStrings[0].value]

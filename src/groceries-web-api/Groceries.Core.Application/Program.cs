@@ -12,23 +12,23 @@ builder.Configuration.AddEnvironmentVariables();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// if (builder.Environment.IsDevelopment())
-// {
-//     var postgresOptions = new PostgresOptions()
-//     {
-//         Database = Environment.GetEnvironmentVariable("PGDB") ?? throw new InvalidOperationException("Database Name Needed"),
-//         Username = Environment.GetEnvironmentVariable("PGUSER") ?? throw new InvalidOperationException("Database User Needed"),
-//         Password = Environment.GetEnvironmentVariable("PGPASSWORD") ?? throw new InvalidOperationException("Database Password Needed"),
-//         Host = Environment.GetEnvironmentVariable("PGHOST") ?? throw new InvalidOperationException("Database Host Needed"),
-//         Port = Environment.GetEnvironmentVariable("PGPORT") ?? "5432"
-//     };
+if (builder.Environment.IsDevelopment())
+{
+    var postgresOptions = new PostgresOptions()
+    {
+        Database = Environment.GetEnvironmentVariable("PGDB") ?? throw new InvalidOperationException("Database Name Needed"),
+        Username = Environment.GetEnvironmentVariable("PGUSER") ?? throw new InvalidOperationException("Database User Needed"),
+        Password = Environment.GetEnvironmentVariable("PGPASSWORD") ?? throw new InvalidOperationException("Database Password Needed"),
+        Host = Environment.GetEnvironmentVariable("PGHOST") ?? throw new InvalidOperationException("Database Host Needed"),
+        Port = Environment.GetEnvironmentVariable("PGPORT") ?? "5432"
+    };
 
-//     builder.Services.AddPostgresDbContext(postgresOptions);
-// }
-// else
-// {
+    builder.Services.AddPostgresDbContext(postgresOptions);
+}
+else
+{
     builder.Services.AddAzureSQLDbContext(builder.Configuration);
-//}
+}
 
 
 builder.Services.AddRepositories();

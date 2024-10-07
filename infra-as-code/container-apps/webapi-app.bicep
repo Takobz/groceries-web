@@ -20,8 +20,7 @@ param environmentVariables array = []
 
 param containerRegistryLoginServer string
 
-
-resource PostgresConatinerApp 'Microsoft.App/containerApps@2024-03-01' = {
+resource webApiConatinerApp 'Microsoft.App/containerApps@2024-03-01' = {
   name: webApiContainerAppName
   location: resourceGroup().location
   identity: {
@@ -59,3 +58,6 @@ resource PostgresConatinerApp 'Microsoft.App/containerApps@2024-03-01' = {
     }
   }
 }
+
+output containerAppOutboundIpAddress string[] = webApiConatinerApp.properties.outboundIpAddresses
+

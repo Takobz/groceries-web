@@ -13,9 +13,8 @@ parameters:
     default: ''
 
 # Add A Key Vault For Some Of these env variables
-# Try this: postgres-app.<environment-name>.svc.cluster.local
 stages:
-- stage: DeployConatinerApps
+- stage: DeployContainerApps
   displayName: 'Deploy Container Apps'
   dependsOn: ${{ parameters.dependsOn }}
   jobs:

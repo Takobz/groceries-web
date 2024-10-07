@@ -32,3 +32,8 @@ stages:
     dependsOn:
       - DeployAzureSQL
       - BuildAndDeployImages
+
+- template: ./templates/stages/deploy-azure-sql-firewall-rules.yml
+  parameters:
+    dependsOn:
+      - DeployContainerApps

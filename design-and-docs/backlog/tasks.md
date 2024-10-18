@@ -12,6 +12,8 @@
 - Add Screenshots of the APP
 - Add retry machanism in the UI on fetch
 - Add Share link logic.
+- Add Kubernetes config for local development.
+- Checkout Backstage
 
 ## Current Progress:
 - Add CI/CD to deploy to Azure

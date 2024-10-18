@@ -13,11 +13,26 @@ stages:
 - stage: DeployAzureSQLFireWallRules
   displayName: 'Deploy Azure SQL Firewall Rules'
   dependsOn: ${{ parameters.dependsOn }}
-  variables:
-    allowedSQLServerIPs: dependencies.DeployContainerApps.DeployContainerApps.outputs.containerAppOutboundIpAddress
   jobs:
-  - job: DeployAzureSQLFirewallRules
+
+  #webApi is deployment name of the api container app deployment.
+  - job: DeployAzureSQLFireWallRules 
+    displayName: 'Apply Azure SQL Firewall Rules'
     steps:
+    - task: AzureCLI@2
+      inputs:
+        azureSubscription: $(serviceConnectionName)
+        scriptType: 'bash'
+        scriptLocation: 'inlineScript'
+        inlineScript: |
+          ALLOWED_IPS=$(az deployment group show \
+            -g $(resourceGroupName) \
+            -n webApi \
+            --query properties.outputs.containerAppOutboundIpAddress.value | jq -c '.')
+          echo "##vso[task.setvariable variable=ALLOWED_IPS]$ALLOWED_IPS"
+          echo $ALLOWED_IPS
+      displayName: 'Get WebAPI IPs'
+
     - task: AzureResourceManagerTemplateDeployment@3
       displayName: 'Deploy Azure SQL Firewall Rules'
       inputs:
@@ -31,4 +46,4 @@ stages:
         deploymentMode: ${{ parameters.deploymentMode }}
         overrideParameters: >-
           -serverName $(databaseServerName)
-          -allowedIPs $(allowedSQLServerIPs)
+          -allowedIPs $(ALLOWED_IPS)

@@ -8,22 +8,20 @@ variables:
 - template: ./variables/variables.yml
 
 stages:
-- template: ./templates/stages/deploy-azure-registry.yml
-  parameters:
-    deploymentMode: ${{ variables.deploymentMode }}
-    rgLocation: ${{ variables.location }}
+# - template: ./templates/stages/deploy-azure-registry.yml
+#   parameters:
+#     deploymentMode: ${{ variables.deploymentMode }}
+#     rgLocation: ${{ variables.location }}
 
 - template: ./templates/stages/deploy-azure-sql.yml
 
 - template: ./templates/stages/build-and-push-images.yml
   parameters:
-    postgresImageName: ${{ variables.postgresImageName }}
     clientImageName: ${{ variables.clientImageName }}
     webApiImageName: ${{ variables.webApiImageName }}
-    nginxImageName: ${{ variables.nginxImageName }}
     arcName: ${{ variables.registryName }}
-    dependsOn:
-      - CreateOrUpdateAzureContainerRegistry
+#     dependsOn:
+#       - CreateOrUpdateAzureContainerRegistry
 
 - template: ./templates/stages/deploy-azure-container-apps.yml
   parameters:

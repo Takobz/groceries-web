@@ -40,6 +40,6 @@ stages:
           -webApiTargetPort $(webApiPort)
           -webApiCpu $(cpuCores)
           -webApiMemory $(memoryInGb)
-          -webApiEnvironmentVariables [{ "name": "ASPNETCORE_ENVIRONMENT", "value": "Production" }, { "name": "DOTNET_RUNNING_IN_CONTAINER", "value": "true" }, { "name": "ConnectionStrings__AZURE_SQL_CONNECTIONSTRING", "value": "Server=tcp:$(databaseServerName).database.windows.net,1433;Initial Catalog=$(databaseName);Persist Security Info=False;User ID=$(databaseUser);Password=$(databasePass);MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;" }]
+          -webApiEnvironmentVariables [{ "name": "ASPNETCORE_ENVIRONMENT", "value": "Production" }, { "name": "DOTNET_RUNNING_IN_CONTAINER", "value": "true" }, { "name": "ConnectionStrings__AZURE_SQL_CONNECTIONSTRING", "value": "Server=tcp:$(databaseServerName).database.windows.net,1433;Initial Catalog=$(databaseName);Persist Security Info=False;User ID=$(databaseUser);Password=$(databasePass);MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;Trusted_Connection=True" }]
 
 #[reference(resourceId('Microsoft.Sql/servers/databases', databaseServerName, databaseName), '2020-08-01-preview', 'Full').connectionStrings[0].value]

@@ -2,13 +2,9 @@ parameters:
   - name: arcName
     type: string
     default: 'acrContainerRegistry'
-  - name: postgresImageName
-    type: string
   - name: clientImageName
     type: string
   - name: webApiImageName
-    type: string
-  - name: nginxImageName
     type: string
   - name: dependsOn
     type: object
@@ -75,8 +71,6 @@ stages:
         inlineScript: |
           docker tag ${{ parameters.clientImageName }}:latest $(ACR_LOGIN_SERVER)/$(clientImageName):latest
           docker tag ${{ parameters.webApiImageName }}:latest $(ACR_LOGIN_SERVER)/$(webApiImageName):latest
-          docker tag ${{ parameters.nginxImageName }}:latest $(ACR_LOGIN_SERVER)/$(nginxImageName):latest
-          docker tag ${{ parameters.postgresImageName }}:latest $(ACR_LOGIN_SERVER)/$(postgresImageName):latest
 
     - task: AzureCLI@2
       displayName: 'Push Images'
@@ -87,5 +81,3 @@ stages:
         inlineScript: |
           docker push $(ACR_LOGIN_SERVER)/${{ parameters.clientImageName }}:latest
           docker push $(ACR_LOGIN_SERVER)/${{ parameters.webApiImageName }}:latest
-          docker push $(ACR_LOGIN_SERVER)/${{ parameters.nginxImageName }}:latest
-          docker push $(ACR_LOGIN_SERVER)/${{ parameters.postgresImageName }}:latest

@@ -10,8 +10,20 @@ param webApiMemory string = '1Gi'
 param webApiImageTag string = 'latest'
 param webApiEnvironmentVariables array = []
 
+param sqlServerName string
+param sqlDatabaseName string
+
 resource containerRegistry 'Microsoft.ContainerRegistry/registries@2022-12-01' existing = {
   name: containerRegistryName
+}
+
+resource sqlServer 'Microsoft.Sql/servers@2022-05-01-preview' existing = {
+  name: sqlServerName
+}
+
+resource sqlDatabase 'Microsoft.Sql/servers/databases@2022-05-01-preview' existing = {
+  name: sqlDatabaseName
+  parent: sqlServer
 }
 
 resource managedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' = {
@@ -26,6 +38,15 @@ resource pullImagesRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-
     principalId: managedIdentity.properties.principalId
     roleDefinitionId: resourceId('Microsoft.Authorization/roleDefinitions', acrPullRoleDefinitionGuid)
     principalType: 'ServicePrincipal'
+  }
+}
+
+var readWriteSQLDatabaseRole = 'db_datawriter'
+resource sqlDatabaseRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  name: guid(sqlServer.name, sqlDatabase.name, readWriteSQLDatabaseRole)
+  properties: {
+    roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'db_datareader')
+    principalId: managedIdentity.properties.principalId
   }
 }
 

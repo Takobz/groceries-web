@@ -30,5 +30,3 @@ stages:
         overrideParameters: >-
           -serverName $(databaseServerName)
           -databaseName $(databaseName)
-          -administratorLogin $(databaseUser)
-          -administratorLoginPassword $(adminPassword)

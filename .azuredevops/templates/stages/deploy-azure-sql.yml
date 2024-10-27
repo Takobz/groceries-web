@@ -30,3 +30,4 @@ stages:
         overrideParameters: >-
           -serverName $(databaseServerName)
           -databaseName $(databaseName)
+          -managedIdentityName $(managedIdentityName)

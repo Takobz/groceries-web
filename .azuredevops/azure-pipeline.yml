@@ -13,13 +13,11 @@ stages:
 #     deploymentMode: ${{ variables.deploymentMode }}
 #     rgLocation: ${{ variables.location }}
 
-- template: ./templates/stages/deploy-azure-sql.yml
-
-- template: ./templates/stages/build-and-push-images.yml
-  parameters:
-    clientImageName: ${{ variables.clientImageName }}
-    webApiImageName: ${{ variables.webApiImageName }}
-    arcName: ${{ variables.registryName }}
+# - template: ./templates/stages/build-and-push-images.yml
+#   parameters:
+#     clientImageName: ${{ variables.clientImageName }}
+#     webApiImageName: ${{ variables.webApiImageName }}
+#     arcName: ${{ variables.registryName }}
 #     dependsOn:
 #       - CreateOrUpdateAzureContainerRegistry
 
@@ -27,11 +25,15 @@ stages:
   parameters:
     deploymentMode: ${{ variables.deploymentMode }}
     rgLocation: ${{ variables.location }}
+    # dependsOn:
+    #   - BuildAndDeployImages
+
+- template: ./templates/stages/deploy-azure-sql.yml
+  parameters:
     dependsOn:
-      - DeployAzureSQL
-      - BuildAndDeployImages
+      - DeployContainerApps
 
 - template: ./templates/stages/deploy-azure-sql-firewall-rules.yml
   parameters:
     dependsOn:
-      - DeployContainerApps
+      - DeployAzureSQL

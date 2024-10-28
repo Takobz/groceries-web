@@ -10,6 +10,9 @@ param webApiMemory string = '1Gi'
 param webApiImageTag string = 'latest'
 param webApiEnvironmentVariables array = []
 
+param sqlServerName string
+param sqlDBName string
+
 resource containerRegistry 'Microsoft.ContainerRegistry/registries@2022-12-01' existing = {
   name: containerRegistryName
 }
@@ -45,6 +48,8 @@ module containerAppsEnvironment 'container-apps-environment.bicep' = {
   }
 }
 
+
+
 module webApi 'webapi-app.bicep' = {
   name: 'webApi'
   params: {
@@ -58,5 +63,8 @@ module webApi 'webapi-app.bicep' = {
     containerRegistryUserAssignedIdentityId: managedIdentity.id
     environmentVariables: webApiEnvironmentVariables
     containerRegistryLoginServer: containerRegistry.properties.loginServer
+    sqlServerName: sqlServerName
+    sqlDBName: sqlDBName
+    managedIdentityPrincipalId: managedIdentity.properties.principalId
   }
 }

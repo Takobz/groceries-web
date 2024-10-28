@@ -3,22 +3,28 @@ param webApiContainerAppName string
 
 @description('Managed Environment Id')
 param managedEnvironmentId string
-
 param webapiImage string
-
 param webApiTargetPort int = 5000
-
 param webApiImageTag string = 'latest'
-
 param webApiCpu string
-
 param webApiMemory string = '1Gi'
-
 param containerRegistryUserAssignedIdentityId string
-
 param environmentVariables array = []
-
 param containerRegistryLoginServer string
+param sqlServerName string
+param sqlDBName string
+param managedIdentityPrincipalId string
+
+var defaultWebApiEnvironmentVariables = [
+  {
+  name: 'DOTNET_RUNNING_IN_CONTAINER'
+  value: 'true'
+  }
+  {
+    name: 'ConnectionStrings__AZURE_SQL_CONNECTIONSTRING'
+    value: 'Server=${sqlServerName}.database.windows.net;Database=${sqlDBName};User Id=${managedIdentityPrincipalId};Authentication=Active Directory Managed Identity; Encrypt=True;'
+  }
+]
 
 resource webApiConatinerApp 'Microsoft.App/containerApps@2024-03-01' = {
   name: webApiContainerAppName
@@ -52,7 +58,7 @@ resource webApiConatinerApp 'Microsoft.App/containerApps@2024-03-01' = {
             cpu: json(webApiCpu)
             memory: webApiMemory
           }
-          env: environmentVariables
+          env: union(environmentVariables, defaultWebApiEnvironmentVariables)
         }
       ]
     }

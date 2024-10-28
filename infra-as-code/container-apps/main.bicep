@@ -65,6 +65,6 @@ module webApi 'webapi-app.bicep' = {
     containerRegistryLoginServer: containerRegistry.properties.loginServer
     sqlServerName: sqlServerName
     sqlDBName: sqlDBName
-    managedIdentityPrincipalId: managedIdentity.properties.principalId
+    managedIdentityClientId: managedIdentity.properties.clientId
   }
 }

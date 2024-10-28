@@ -13,7 +13,7 @@ param environmentVariables array = []
 param containerRegistryLoginServer string
 param sqlServerName string
 param sqlDBName string
-param managedIdentityPrincipalId string
+param managedIdentityClientId string
 
 var defaultWebApiEnvironmentVariables = [
   {
@@ -22,7 +22,7 @@ var defaultWebApiEnvironmentVariables = [
   }
   {
     name: 'ConnectionStrings__AZURE_SQL_CONNECTIONSTRING'
-    value: 'Server=${sqlServerName}.database.windows.net;Database=${sqlDBName};User Id=${managedIdentityPrincipalId};Authentication=Active Directory Managed Identity; Encrypt=True;'
+    value: 'Server=${sqlServerName}.database.windows.net;Database=${sqlDBName};User Id=${managedIdentityClientId};Authentication=Active Directory Managed Identity; Encrypt=True;'
   }
 ]
 

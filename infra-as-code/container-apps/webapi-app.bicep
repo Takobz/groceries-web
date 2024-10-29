@@ -22,7 +22,11 @@ var defaultWebApiEnvironmentVariables = [
   }
   {
     name: 'ConnectionStrings__AZURE_SQL_CONNECTIONSTRING'
-    value: 'Server=${sqlServerName}.database.windows.net;Database=${sqlDBName};User Id=${managedIdentityClientId};Authentication=Active Directory Managed Identity; Encrypt=True;'
+    value: 'Server=${sqlServerName}.database.windows.net;Database=${sqlDBName}; Authentication=Active Directory Default; Encrypt=True;'
+  }
+  {
+    name: 'AZURE_CLIENT_ID'
+    value: managedIdentityClientId
   }
 ]
 

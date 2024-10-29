@@ -49,7 +49,7 @@ module containerAppsEnvironment 'container-apps-environment.bicep' = {
 }
 
 
-
+// https://blog.cellenza.com/en/cloud/how-to-secure-azure-sql-database-with-managed-identity-azure-ad-authentication/
 module webApi 'webapi-app.bicep' = {
   name: 'webApi'
   params: {

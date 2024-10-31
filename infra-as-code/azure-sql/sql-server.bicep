@@ -23,5 +23,13 @@ resource sqlServer 'Microsoft.Sql/servers@2022-05-01-preview' = {
   }
   properties: {
     primaryUserAssignedIdentityId: managedIdentity.id
+    administrators: {
+      administratorType: 'ActiveDirectory'
+      azureADOnlyAuthentication: true
+      login: managedIdentity.name
+      sid: managedIdentity.properties.principalId
+      tenantId: subscription().tenantId
+      principalType: 'Application'
+    }
   }
 }

@@ -26,7 +26,7 @@ resource sqlServer 'Microsoft.Sql/servers@2022-05-01-preview' = {
     administrators: {
       administratorType: 'ActiveDirectory'
       login: managedIdentityName
-      sid: managedIdentity.properties.principalId
+      sid: managedIdentity.properties.clientId
       tenantId: subscription().tenantId
       principalType: 'Application'
     }

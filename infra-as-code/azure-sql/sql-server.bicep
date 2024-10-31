@@ -25,8 +25,7 @@ resource sqlServer 'Microsoft.Sql/servers@2022-05-01-preview' = {
     primaryUserAssignedIdentityId: managedIdentity.id
     administrators: {
       administratorType: 'ActiveDirectory'
-      azureADOnlyAuthentication: false
-      login: managedIdentity.name
+      login: managedIdentityName
       sid: managedIdentity.properties.principalId
       tenantId: subscription().tenantId
       principalType: 'Application'

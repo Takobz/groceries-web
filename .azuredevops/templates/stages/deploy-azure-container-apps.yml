@@ -43,3 +43,9 @@ stages:
           -webApiEnvironmentVariables [{ "name": "ASPNETCORE_ENVIRONMENT", "value": "Production" }]
           -sqlServerName $(databaseServerName)
           -sqlDBName $(databaseName)
+          -clientContainerAppName $(clientContainerAppName)
+          -clientImage $(clientImageName)
+          -clientTargetPort $(clientPort)
+          -clientCpu $(cpuCores)
+          -clientMemory $(memoryInGb)
+          

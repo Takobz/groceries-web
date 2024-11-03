@@ -10,6 +10,14 @@ param webApiMemory string = '1Gi'
 param webApiImageTag string = 'latest'
 param webApiEnvironmentVariables array = []
 
+param clientContainerAppName string
+param clientImage string
+param clientImageTag string = 'latest'
+param clientCpu string = '0.5'
+param clientMemory string = '1Gi'
+param clientTargetPort int
+
+
 param sqlServerName string
 param sqlDBName string
 
@@ -48,7 +56,6 @@ module containerAppsEnvironment 'container-apps-environment.bicep' = {
   }
 }
 
-
 // https://blog.cellenza.com/en/cloud/how-to-secure-azure-sql-database-with-managed-identity-azure-ad-authentication/
 module webApi 'webapi-app.bicep' = {
   name: 'webApi'
@@ -66,5 +73,26 @@ module webApi 'webapi-app.bicep' = {
     sqlServerName: sqlServerName
     sqlDBName: sqlDBName
     managedIdentityClientId: managedIdentity.properties.clientId
+  }
+}
+
+module clientApp 'client-app.bicep' = {
+  name: 'clientApp'
+  params: {
+    clientContainerAppName: clientContainerAppName
+    managedEnvironmentId: containerAppsEnvironment.outputs.containerAppsEnvironmentId
+    clientImage: clientImage
+    clientImageTag: clientImageTag
+    clientCpu: clientCpu
+    clientMemory: clientMemory
+    clientTargetPort: clientTargetPort
+    containerRegistryUserAssignedIdentityId: managedIdentity.id
+    environmentVariables: [
+      {
+        name: 'REACT_APP_GROCERIES_WEB_API_BASE_URI'
+        value: webApi.outputs.containerAppFullyQualifiedDomainName
+      }
+    ]
+    containerRegistryLoginServer: containerRegistry.properties.loginServer
   }
 }

@@ -27,14 +27,15 @@ variables:
   - name: webApiPort
     value: 8080
   
-
+  - name: clientContainerAppName
+    value: 'grocery-client-container-app'
   - name: clientImageName
     value: 'src_client'
-  - name: nginxImageName
-    value: 'src_nginx'
-
   - name: clientPort
     value: 3000
+
+  - name: nginxImageName
+    value: 'src_nginx'
   
   - name: nginxPort
     value: 80

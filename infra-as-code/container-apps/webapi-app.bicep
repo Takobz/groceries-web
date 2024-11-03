@@ -70,4 +70,5 @@ resource webApiConatinerApp 'Microsoft.App/containerApps@2024-03-01' = {
 }
 
 output containerAppOutboundIpAddress string[] = webApiConatinerApp.properties.outboundIpAddresses
+output containerAppFullyQualifiedDomainName string = webApiConatinerApp.properties.configuration.ingress.fqdn
 

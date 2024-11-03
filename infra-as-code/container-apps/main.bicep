@@ -90,7 +90,7 @@ module clientApp 'client-app.bicep' = {
     environmentVariables: [
       {
         name: 'REACT_APP_GROCERIES_WEB_API_BASE_URI'
-        value: webApi.outputs.containerAppFullyQualifiedDomainName
+        value: 'https://${webApi.outputs.containerAppFullyQualifiedDomainName}'
       }
     ]
     containerRegistryLoginServer: containerRegistry.properties.loginServer

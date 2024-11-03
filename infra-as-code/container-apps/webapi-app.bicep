@@ -4,7 +4,7 @@ param webApiContainerAppName string
 @description('Managed Environment Id')
 param managedEnvironmentId string
 param webapiImage string
-param webApiTargetPort int = 5000
+param webApiTargetPort int = 8080
 param webApiImageTag string = 'latest'
 param webApiCpu string
 param webApiMemory string = '1Gi'

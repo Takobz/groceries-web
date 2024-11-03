@@ -10,6 +10,9 @@ const GroceriesAPIService = () => {
         return await axios.get('/api/cart/all' ,{
             baseURL: groceriesBaseUrl,
             timeout: timeout,
+            headers: {
+                'Referer': getHost(),
+            }
         })
         .then(response => response.data);
     }
@@ -24,7 +27,8 @@ const GroceriesAPIService = () => {
                 baseURL: groceriesBaseUrl,
                 timeout: timeout,
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Referer': getHost()
                 }
             }
         ).then(response => {
@@ -41,7 +45,10 @@ const GroceriesAPIService = () => {
     const getCart = async (cartId) => {
         return await axios.get('api/cart/' + cartId, {
             baseURL: groceriesBaseUrl,
-            timeout: timeout
+            timeout: timeout,
+            headers: {
+                'Referer': getHost(),
+            }
         }).then(response => {
             if (response.status === 200) {
                 return new GetCartResponseDTO(
@@ -63,7 +70,8 @@ const GroceriesAPIService = () => {
             baseURL: groceriesBaseUrl,
             timeout: timeout,
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Referer': getHost(),
             }
         }).then(response => {
             if (response.status === 200) {
@@ -82,7 +90,10 @@ const GroceriesAPIService = () => {
 
         return await axios.delete('api/cart/' + cartId, {
             baseURL: groceriesBaseUrl,
-            timeout: timeout
+            timeout: timeout,
+            headers: {
+                'Referer': getHost(),
+            }
         }).then(response => {
             if (response.status === 204) {
                 return isDeleted;
@@ -101,7 +112,8 @@ const GroceriesAPIService = () => {
             baseURL: groceriesBaseUrl,
             timeout: timeout,
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Referer': getHost()
             }
         }).then(response => {
             if (response.status === 200) {
@@ -118,4 +130,8 @@ const GroceriesAPIService = () => {
     return {getAllCarts, createCart, getCart, deleteCart, addCartItems }
 }
 
+const getHost = () => {
+    const { protocol, hostname } = window.location;
+    return `${protocol}//${hostname}`;
+};
 export default GroceriesAPIService

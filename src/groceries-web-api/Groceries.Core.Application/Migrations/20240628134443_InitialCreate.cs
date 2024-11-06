@@ -11,15 +11,22 @@ namespace Groceries.Core.Application.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            //This is not auto-generated code always add this manually
+            //This is to account for the different data types between Postgres and Azure SQL
+            var identifier = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development" ?
+                "uuid" : "uniqueidentifier";
+            var datetime = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development" ?
+                "timestamp with time zone" : "datetime2";
+
             migrationBuilder.CreateTable(
                 name: "Carts",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<Guid>(type: identifier, nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
                     Description = table.Column<string>(type: "text", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: datetime, nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: datetime, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -30,15 +37,15 @@ namespace Groceries.Core.Application.Migrations
                 name: "CartItems",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<Guid>(type: identifier, nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
                     Description = table.Column<string>(type: "text", nullable: false),
                     Category = table.Column<string>(type: "text", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     ImageUrl = table.Column<string>(type: "text", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CartId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: datetime, nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: datetime, nullable: false),
+                    CartId = table.Column<Guid>(type: identifier, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -55,14 +62,14 @@ namespace Groceries.Core.Application.Migrations
                 name: "Reminders",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<Guid>(type: identifier, nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
                     Description = table.Column<string>(type: "text", nullable: false),
-                    ReminderDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ReminderDate = table.Column<DateTime>(type: datetime, nullable: false),
                     IsCompleted = table.Column<bool>(type: "bit", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CartId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: datetime, nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: datetime, nullable: false),
+                    CartId = table.Column<Guid>(type: identifier, nullable: false)
                 },
                 constraints: table =>
                 {

@@ -25,14 +25,21 @@ namespace Groceries.Core.Application.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            //This is not auto-generated code always add this manually
+            //This is to account for the different data types between Postgres and Azure SQL
+            var identifier = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development" ?
+                "uuid" : "uniqueidentifier";
+            var datetime = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development" ?
+                "timestamp with time zone" : "datetime2";
+
             modelBuilder.Entity("Groceries.Data.DataModels.Cart", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType(identifier);
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                        .HasColumnType(datetime);
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -43,7 +50,7 @@ namespace Groceries.Core.Application.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2");
+                        .HasColumnType(datetime);
 
                     b.HasKey("Id");
 
@@ -54,17 +61,17 @@ namespace Groceries.Core.Application.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType(identifier);
 
                     b.Property<Guid>("CartId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType(identifier);
 
                     b.Property<string>("Category")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                        .HasColumnType(datetime);
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -82,7 +89,7 @@ namespace Groceries.Core.Application.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2");
+                        .HasColumnType(datetime);
 
                     b.HasKey("Id");
 
@@ -95,13 +102,13 @@ namespace Groceries.Core.Application.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType(identifier);
 
                     b.Property<Guid>("CartId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType(identifier);
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                        .HasColumnType(datetime);
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -115,10 +122,10 @@ namespace Groceries.Core.Application.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime>("ReminderDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType(datetime);
 
                     b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2");
+                        .HasColumnType(datetime);
 
                     b.HasKey("Id");
 

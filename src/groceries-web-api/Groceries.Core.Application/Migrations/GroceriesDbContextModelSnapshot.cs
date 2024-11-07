@@ -24,6 +24,7 @@ namespace Groceries.Core.Application.Migrations
 
             //This is not auto-generated code always add this manually
             //This is to account for the different data types between Postgres and Azure SQL
+            //TODO: Use PendingMigrations to determine if the environment is Development or Production
             var identifier = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development" ?
                 "uuid" : "uniqueidentifier";
             var datetime = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development" ?

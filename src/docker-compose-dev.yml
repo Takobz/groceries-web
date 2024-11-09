@@ -33,19 +33,10 @@ services:
     #using defaults for initial set-up
     environment:
       - ASPNETCORE_URLS=http://+:5000
+      - ASPNETCORE_ENVIRONMENT=Development
       - DOTNET_RUNNING_IN_CONTAINER=true
       - PGUSER=postgres
       - PGPASSWORD=postgres_password
       - PGDB=groceries_database
       - PGHOST=postgres
       - PGPORT=5432 # default port
-  nginx:
-    build: 
-      context: ./nginx
-      dockerfile: Dockerfile.dev
-    restart: unless-stopped
-    depends_on:
-      - client
-      - webapi
-    ports:
-      - '8080:80'

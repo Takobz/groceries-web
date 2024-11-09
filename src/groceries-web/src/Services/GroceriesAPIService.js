@@ -132,6 +132,6 @@ const GroceriesAPIService = () => {
 
 const getHost = () => {
     const { protocol, hostname } = window.location;
-    return `${protocol}//${hostname}`;
+    return hostname.includes("localhost") ? '' : `${protocol}//${hostname}`;
 };
 export default GroceriesAPIService

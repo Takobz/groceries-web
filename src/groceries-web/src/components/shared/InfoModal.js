@@ -14,7 +14,7 @@ const style = {
     p: 4,
 };
 
-const ConfirmModal = (props) => {
+const InfoModal = (props) => {
     return (
         <Modal
             aria-labelledby="confirm-modal-title"
@@ -25,8 +25,7 @@ const ConfirmModal = (props) => {
                 <Stack spacing={2}>
                     <TitleAndDescription title={props.title} description={props.description} />
                     <div style={{ display: 'flex', justifyContent: 'right', gap: '10px' }}>
-                        <CurvedButton onClick={props.onConfirm} text='Confirm' />
-                        <CurvedButton onClick={props.onCancel} text='Cancel' />
+                        <CurvedButton onClick={props.onCancel} text='Close' />
                     </div>
                 </Stack>
             </Box>
@@ -34,4 +33,4 @@ const ConfirmModal = (props) => {
     );
 }
 
-export default ConfirmModal;
+export default InfoModal;

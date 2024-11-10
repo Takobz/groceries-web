@@ -127,7 +127,26 @@ const GroceriesAPIService = () => {
         });
     }
 
-    return {getAllCarts, createCart, getCart, deleteCart, addCartItems }
+    const copyCart = async (cartId) => {
+        return await axios.post('api/cart/' + cartId + '/copy', {}, {
+            baseURL: groceriesBaseUrl,
+            timeout: timeout,
+            headers: {
+                'Referer': getHost(),
+            }
+        }).then(response => {
+            if (response.status === 201) {
+                return new GetCartResponseDTO(
+                    response.data.data.cartId,
+                    response.data.data.name,
+                    response.data.data.description,
+                    response.data.data.groceryItems
+                );
+            }
+        });
+    }
+
+    return { getAllCarts, createCart, getCart, deleteCart, addCartItems, copyCart }
 }
 
 const getHost = () => {

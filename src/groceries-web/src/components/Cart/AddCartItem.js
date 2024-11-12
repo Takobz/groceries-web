@@ -58,25 +58,25 @@ const AddCartItem = (props) => {
             aria-describedby="modal-modal-description"
             open={props.isOpen}
             onClose={props.closeModal}>
-            <Box sx={style}>
-                <Stack spacing={1}>
-                    <TitleAndDescription title='Item Name' description='Name of the item' />
-                    <TextInput value={itemName} onChange={(event) => setItemName(event.target.value)} isRequired={true} label='Name' />
+            <Box sx={{ ...style, width: { xs: '70%', sm: 400 } }}>
+            <Stack spacing={1}>
+                <TitleAndDescription title='Item Name' description='Name of the item' />
+                <TextInput value={itemName} onChange={(event) => setItemName(event.target.value)} isRequired={true} label='Name' />
 
-                    <TitleAndDescription title='Item Description' description='Description of the item' />
-                    <TextInput value={itemDescription} onChange={(event) => setItemDescription(event.target.value)} isRequired={true} label='Description' />
+                <TitleAndDescription title='Item Description' description='Description of the item' />
+                <TextInput value={itemDescription} onChange={(event) => setItemDescription(event.target.value)} isRequired={true} label='Description' />
 
-                    <TitleAndDescription title='Item Category' description='Category of the item' />
-                    <TextInput value={itemCategory} onChange={(event) => setItemCategory(event.target.value)} isRequired={false} label='Category' />
+                <TitleAndDescription title='Item Category' description='Category of the item' />
+                <TextInput value={itemCategory} onChange={(event) => setItemCategory(event.target.value)} isRequired={false} label='Category' />
 
-                    <TitleAndDescription title='Add Item' description='Price of the item' />
-                    <NumberInput value={itemPrice} onChange={(event) => setItemPrice(event.target.value)} isRequired={true} label='Price' />
+                <TitleAndDescription title='Add Item' description='Price of the item' />
+                <NumberInput value={itemPrice} onChange={(event) => setItemPrice(event.target.value)} isRequired={true} label='Price' />
 
-                    <CurvedButton text='Add Item' onClick={() => handleAddItem()} />
-                </Stack>
+                <CurvedButton text='Add Item' onClick={() => handleAddItem()} />
+            </Stack>
             </Box>
         </Modal>
-    )
+        )
 }
 
 export default AddCartItem;

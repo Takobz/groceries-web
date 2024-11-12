@@ -7,7 +7,7 @@ const style = {
     top: '30%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 400,
+    width: { xs: 200, sm: 500 },
     bgcolor: 'background.paper',
     border: '2px solid #000',
     boxShadow: 24,
@@ -17,6 +17,7 @@ const style = {
 const ConfirmModal = (props) => {
     return (
         <Modal
+            sx={{ minWidth: { xs: 200, sm: 500 } }}
             aria-labelledby="confirm-modal-title"
             aria-describedby="confirm-modal-description"
             open={props.isOpen}

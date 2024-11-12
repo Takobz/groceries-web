@@ -17,6 +17,7 @@ const style = {
 const InfoModal = (props) => {
     return (
         <Modal
+            sx={{ minWidth: { xs: 200, sm: 500 } }}
             aria-labelledby="confirm-modal-title"
             aria-describedby="confirm-modal-description"
             open={props.isOpen}

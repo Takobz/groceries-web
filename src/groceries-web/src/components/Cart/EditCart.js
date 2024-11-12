@@ -26,7 +26,7 @@ const EditCart = (props) => {
 
     return (
         <>
-            <Box sx={{ width: 500 }}>
+            <Box sx={{ width: 500, minWidth: { xs: '90%', sm: 500 }}}>
                 <Stack spacing={1}>
                     <TitleAndDescription title={cart.name} description={cart.description} />
                     {cart.items.map(item => (<CartItem key={item.cartItemId} item={item} />))}

@@ -46,15 +46,15 @@ namespace Groceries.Core.Application.ApiRoutes
             .WithOpenApi();
 
             //Think about what you want Update to do.
-            // app.MapPut("/api/cart/{cartId}", async (Guid cartId, UpdateCartRequestDTO updateCartDTO, ICartService cartService, IMapper mapper) => 
-            // {
-            //     var updateResponse = await cartService.UpdateCartAsync(cartId, updateCartDTO);
-            //     var updatedCart = mapper.Map<CartResponseDTO>(updateResponse);
-            //     return await Task.FromResult(Results.Ok(new ApiResponse<CartResponseDTO>(updatedCart)));
-            // })
-            // .AddEndpointFilter<UpdateCartValidationFilter>()
-            // .WithName("UpdateCart")
-            // .WithOpenApi();
+            app.MapPut("/api/cart/{cartId}", async (Guid cartId, UpdateCartRequestDTO updateCartDTO, ICartService cartService, IMapper mapper) => 
+            {
+                var updateResponse = await cartService.UpdateCartAsync(cartId, updateCartDTO);
+                var updatedCart = mapper.Map<CartResponseDTO>(updateResponse);
+                return await Task.FromResult(Results.Ok(new ApiResponse<CartResponseDTO>(updatedCart)));
+            })
+            .AddEndpointFilter<UpdateCartValidationFilter>()
+            .WithName("UpdateCart")
+            .WithOpenApi();
 
             app.MapPatch("/api/cart/{cartId}/items", async (Guid cartId, AddItemsToCartRequestDTO addItemsDTO, ICartService cartService, IMapper mapper) => 
             {
@@ -87,6 +87,8 @@ namespace Groceries.Core.Application.ApiRoutes
             .AddEndpointFilter<DeleteCartValidationFilter>()
             .WithName("DeleteCart")
             .WithOpenApi();
+
+            
 
             app.MapPost("/api/cart/{cartId}/copy", async (Guid cartId, ICartService cartService, IMapper mapper) => 
             {

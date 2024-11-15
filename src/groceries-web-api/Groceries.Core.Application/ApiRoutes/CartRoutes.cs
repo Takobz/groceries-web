@@ -56,6 +56,21 @@ namespace Groceries.Core.Application.ApiRoutes
             .WithName("UpdateCart")
             .WithOpenApi();
 
+            app.MapPut("/api/cart/{cartId}/details", async (Guid cartId, UpdateCartDetailsRequestDTO updateCartDetailsDTO, ICartService cartService, IMapper mapper) => 
+            {
+                var updateResponse = await cartService.UpdateCartDetailsAsync(cartId, updateCartDetailsDTO);
+                if (updateResponse == null)
+                {
+                    return Results.NotFound();
+                }
+
+                var updatedCart = mapper.Map<CartResponseDTO>(updateResponse);
+                return await Task.FromResult(Results.Ok(new ApiResponse<CartResponseDTO>(updatedCart)));
+            })
+            .AddEndpointFilter<UpdateCartDetailsValidationFilter>()
+            .WithName("UpdateCartDetails")
+            .WithOpenApi();
+
             app.MapPatch("/api/cart/{cartId}/items", async (Guid cartId, AddItemsToCartRequestDTO addItemsDTO, ICartService cartService, IMapper mapper) => 
             {
                 var addItemsResponse = await cartService.AddItemsToCartAsync(cartId, addItemsDTO);
@@ -87,8 +102,6 @@ namespace Groceries.Core.Application.ApiRoutes
             .AddEndpointFilter<DeleteCartValidationFilter>()
             .WithName("DeleteCart")
             .WithOpenApi();
-
-            
 
             app.MapPost("/api/cart/{cartId}/copy", async (Guid cartId, ICartService cartService, IMapper mapper) => 
             {

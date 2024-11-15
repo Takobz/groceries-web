@@ -9,7 +9,7 @@
 - ~~Add Cart Items from UI.~~
 - ~~Add API logic for copying a cart.~~
 - ~~Delete Cart from the UI.~~
-- Add Edit functionality
+- ~~Add Edit functionality~~
 - Edit, Tick, and Delete Item
 - Add Share link logic.
 - Add Screenshots of the APP

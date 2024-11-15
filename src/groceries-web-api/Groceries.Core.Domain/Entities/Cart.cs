@@ -62,6 +62,14 @@ namespace Groceries.Core.Domain.Entities
             return this;
         }
 
+        public Cart UpdatCartDetails(string name, string description)
+        {
+            Name = name;
+            Description = description;
+            UpdatedAt = DateTime.UtcNow;
+            return this;
+        }
+
         private void ValidateCartData()
         {
             if (string.IsNullOrWhiteSpace(Name))

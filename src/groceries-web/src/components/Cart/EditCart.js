@@ -4,7 +4,7 @@ import TitleAndDescription from "../shared/TitleAndDescription";
 import CurvedButton from "../shared/CurvedButton";
 import CartItem from "./CartItem";
 import AddCartItem from "./AddCartItem";
-
+import EditableTitleAndDescription from "../shared/EditableTitleAnDescription";
 
 const EditCart = (props) => {
     const [cart, setCart] = React.useState(props.cart)
@@ -28,7 +28,7 @@ const EditCart = (props) => {
         <>
             <Box sx={{ width: 500, minWidth: { xs: '90%', sm: 500 }}}>
                 <Stack spacing={1}>
-                    <TitleAndDescription title={cart.name} description={cart.description} />
+                    <EditableTitleAndDescription entityId={cart.cartId} title={cart.name} description={cart.description} />
                     {cart.items.map(item => (<CartItem key={item.cartItemId} item={item} />))}
                     <div style={{ display: 'flex', justifyContent: 'right' }}>
                         <CurvedButton text='Add Item' onClick={openModal} />

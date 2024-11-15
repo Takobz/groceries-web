@@ -4,6 +4,7 @@ using Groceries.Core.Application.Models.ServiceModels;
 using Groceries.Core.Domain.Entities;
 using Groceries.Core.Domain.Repositories;
 using Groceries.Infrastructure.Repositories.CommandRepositories;
+using Groceries.Core.Application.Helpers;
 
 namespace Groceries.Core.Application.Services
 {
@@ -16,6 +17,7 @@ namespace Groceries.Core.Application.Services
         Task<CartResponse?> UpdateCartAsync(Guid id, UpdateCartRequestDTO updateCartRequestDTO);
         Task<CartResponse?> AddItemsToCartAsync(Guid id, AddItemsToCartRequestDTO addItemsToCartRequestDTO);
         Task<CartResponse?> CopyCartAsync(Guid id);
+        Task<CartResponse?> UpdateCartDetailsAsync(Guid id, UpdateCartDetailsRequestDTO updateCartDetailsRequestDTO);
     }
 
     public class CartService : ICartService
@@ -181,6 +183,29 @@ namespace Groceries.Core.Application.Services
 
             var createdCart = await _cartCommandRepository.CreateCartAsync(copiedCart);
             return _mapper.Map<CartResponse>(createdCart);
+        }
+
+        public async Task<CartResponse?> UpdateCartDetailsAsync(Guid id, UpdateCartDetailsRequestDTO updateCartDetailsRequestDTO)
+        {
+            var cartToUpdate = await _cartQueryRepository.GetByIdAsync(id);
+            if (cartToUpdate == null)
+            {
+                _logger.LogWarning("Cart with id: {cartId} not found", id);
+                return null;
+            }
+
+            var cartEntity = new Cart(
+                cartToUpdate.Id,
+                updateCartDetailsRequestDTO.Name,
+                updateCartDetailsRequestDTO.Description,
+                new Reminder(),
+                cartToUpdate.GroceryItems.Select(x => x.ToGroceryItem()).ToList(),
+                cartToUpdate.CreatedAt,
+                DateTime.UtcNow);
+
+            var updatedCart = await _cartCommandRepository.UpdateCartAsync(cartEntity);
+
+            return _mapper.Map<CartResponse>(updatedCart);
         }
     }
 }

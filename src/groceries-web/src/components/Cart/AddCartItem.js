@@ -30,7 +30,7 @@ const AddCartItem = (props) => {
     const [itemPrice, setItemPrice] = React.useState(0);
 
     const handleAddItem = () => {
-        var addItemsDT0 = new addCartItemsRequestDTO(
+        var addItemsDTO = new addCartItemsRequestDTO(
             props.cartId, 
             [
                 new addCartItemRequestDTO(
@@ -42,7 +42,7 @@ const AddCartItem = (props) => {
             ]
         )
 
-        GroceriesAPIService().addCartItems(addItemsDT0)
+        GroceriesAPIService().addCartItems(addItemsDTO)
             .then((response) => {
                 props.onCartUpdate(response);
                 setItemName('');

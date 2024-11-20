@@ -18,6 +18,7 @@ namespace Groceries.Core.Application.Services
         Task<CartResponse?> AddItemsToCartAsync(Guid id, AddItemsToCartRequestDTO addItemsToCartRequestDTO);
         Task<CartResponse?> CopyCartAsync(Guid id);
         Task<CartResponse?> UpdateCartDetailsAsync(Guid id, UpdateCartDetailsRequestDTO updateCartDetailsRequestDTO);
+        Task<DeleteCartItemResponse> RemoveItemFromCartAsync(Guid id, Guid itemId);
     }
 
     public class CartService : ICartService
@@ -206,6 +207,38 @@ namespace Groceries.Core.Application.Services
             var updatedCart = await _cartCommandRepository.UpdateCartAsync(cartEntity);
 
             return _mapper.Map<CartResponse>(updatedCart);
+        }
+
+        public async Task<DeleteCartItemResponse> RemoveItemFromCartAsync(Guid id, Guid itemId)
+        {
+            var cart = await _cartQueryRepository.GetByIdAsync(id);
+            if (cart == null)
+            {
+                _logger.LogWarning("Cart with id: {cartId} not found", id);
+                return new DeleteCartItemResponse(isCartItemDeleted: false, isCartFound: false);
+            }
+
+            var itemToDelete = cart.GroceryItems.FirstOrDefault(x => x.Id == itemId);
+            if (itemToDelete == null)
+            {
+                _logger.LogWarning("Item with id: {itemId} not found in cart with id: {cartId}", itemId, id);
+                return new DeleteCartItemResponse(isCartItemDeleted: false, isCartFound: true);
+            }
+
+            cart.GroceryItems.Remove(itemToDelete);
+            
+            //Fix the bug here doesn't update the cart
+            var cartEntity = new Cart(
+                cart.Id,
+                cart.Name,
+                cart.Description,
+                new Reminder(),
+                cart.GroceryItems.Where(x => x.Id != itemId).Select(x => x.ToGroceryItem()).ToList(),
+                cart.CreatedAt,
+                DateTime.UtcNow);
+
+            await _cartCommandRepository.UpdateCartAsync(cartEntity);
+            return new DeleteCartItemResponse(isCartItemDeleted: true, isCartFound: true);
         }
     }
 }

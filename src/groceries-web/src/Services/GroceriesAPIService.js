@@ -171,7 +171,33 @@ const GroceriesAPIService = () => {
             });
     }
 
-    return { getAllCarts, createCart, getCart, deleteCart, addCartItems, copyCart, updateCartDetails }
+    const deleteCartItem = async (cartId, itemId) => {
+        return await axios.delete('api/cart/' + cartId + '/items/' + itemId, {
+            baseURL: groceriesBaseUrl,
+            timeout: timeout,
+            headers: {
+                'Referer': getHost(),
+            }
+        }).then(response => {
+            if (response.status === 204) {
+                return true;
+            }
+            else{
+                return false;
+            }
+        });
+    }
+
+    return { 
+        getAllCarts,
+        createCart,
+        getCart,
+        deleteCart,
+        addCartItems,
+        copyCart,
+        updateCartDetails,
+        deleteCartItem
+    }
 }
 
 const getHost = () => {

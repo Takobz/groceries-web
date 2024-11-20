@@ -67,5 +67,6 @@ app.UseCors();
 
 //API Routes
 app.MapCartRoutes();
+app.MapCartItemsRoutes();
 
 app.Run();

@@ -19,7 +19,9 @@ const CartItem = (props) => {
                 <IconButton aria-label="edit-cart">
                     <EditIcon />
                 </IconButton>
-                <IconButton aria-label="delete-cart">
+                <IconButton 
+                    aria-label="delete-cart"
+                    onClick={props.onDelete}>
                     <DeleteIcon />
                 </IconButton>
             </Box>

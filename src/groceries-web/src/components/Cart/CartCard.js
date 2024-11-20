@@ -95,6 +95,11 @@ const CartCard = (props) => {
                 </CardActions>
             </Card>
 
+            {
+                // Improve this by moving the confirm modal outside of the cart card
+                // to remove unnecessary rendering of the modal in the DOM.
+            }
+
             <ConfirmModal 
                 isOpen={isModalConfirmOpen} 
                 onConfirmClose={handleModalClose} 

@@ -5,7 +5,6 @@ import ConfirmModal from "../shared/ConfirmModal";
 import Messages from "../../Helpers/applicationConstantMessages";
 
 const CartItemsList = (props) => {
-    const [cartItems, setCartItems] = React.useState(props.items);
     const [isModalConfirmOpen, setIsModalConfirmOpen] = React.useState(false);
     const cartId = props.cartId;
     const [cartItemToDeleteId, setCartItemToDeleteId] = React.useState('');
@@ -23,19 +22,18 @@ const CartItemsList = (props) => {
     const handleConfirmDelete = (cartId, cartItemId) => {
         GroceriesAPIService().deleteCartItem(cartId, cartItemId)
         .then((response) => {
+            setIsModalConfirmOpen(false);
+            setCartItemToDeleteId('');
             if (response){
-                const updatedCartItems = cartItems.filter(item => item.cartItemId !== cartItemId);
-                setCartItems({ ...cartItems, items: updatedCartItems });
+                const updatedCartItems = props.cart.items.filter(item => item.cartItemId !== cartItemId);
+                props.onCartItemsUpdate(updatedCartItems);
             }
         });
     }
 
     return (
         <>
-            {
-
-            }
-            {cartItems && cartItems.length ? cartItems.map(item => (
+            {props.cart.items && props.cart.items.length ? props.cart.items.map(item => (
                 <CartItem 
                     key={item.cartItemId} 
                     item={item}

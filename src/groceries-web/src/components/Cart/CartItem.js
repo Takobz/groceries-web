@@ -16,9 +16,11 @@ const CartItem = (props) => {
                 <Typography>{item.name}</Typography>
             </CardContent>
             <Box sx={{ ml: 'auto' }}>
-                <IconButton aria-label="edit-cart">
-                    <EditIcon />
-                </IconButton>
+                {
+                    // <IconButton aria-label="edit-cart">
+                    // <EditIcon />
+                    // </IconButton>
+                }
                 <IconButton 
                     aria-label="delete-cart"
                     onClick={props.onDelete}>

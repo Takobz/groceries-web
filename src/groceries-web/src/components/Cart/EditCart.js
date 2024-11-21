@@ -20,8 +20,14 @@ const EditCart = (props) => {
 
     const onCartUpdate = (updatedCart) => {
         setCart(updatedCart);
-        console.log(updatedCart);
         setOpenAddItemModal(false);
+    }
+
+    const onCartItemsUpdate = (updatedCartItems) => {
+        setCart({
+            ...cart,
+            items: updatedCartItems
+        });
     }
 
     return (
@@ -29,7 +35,7 @@ const EditCart = (props) => {
             <Box sx={{ width: 500, minWidth: { xs: '90%', sm: 500 }}}>
                 <Stack spacing={1}>
                     <EditableTitleAndDescription entityId={cart.cartId} title={cart.name} description={cart.description} />
-                    <CartItemsList items={cart.items} cartId={cart.cartId} />
+                    <CartItemsList onCartItemsUpdate={onCartItemsUpdate} cart={cart} cartId={cart.cartId} />
                     <div style={{ display: 'flex', justifyContent: 'right' }}>
                         <CurvedButton text='Add Item' onClick={openModal} />
                     </div>

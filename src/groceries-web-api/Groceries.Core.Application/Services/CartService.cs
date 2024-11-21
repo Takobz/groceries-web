@@ -142,7 +142,7 @@ namespace Groceries.Core.Application.Services
             return _mapper.Map<CartResponse>(updatedCart);
         }
 
-        public async Task<DeleteCartResponse> DeleteCartAsync(Guid id)
+        public async Task<DeleteCartResponse>  DeleteCartAsync(Guid id)
         {
             var cartToDelete = await _cartQueryRepository.GetByIdAsync(id);
             if (cartToDelete == null)
@@ -225,19 +225,8 @@ namespace Groceries.Core.Application.Services
                 return new DeleteCartItemResponse(isCartItemDeleted: false, isCartFound: true);
             }
 
-            cart.GroceryItems.Remove(itemToDelete);
-            
-            //Fix the bug here doesn't update the cart
-            var cartEntity = new Cart(
-                cart.Id,
-                cart.Name,
-                cart.Description,
-                new Reminder(),
-                cart.GroceryItems.Where(x => x.Id != itemId).Select(x => x.ToGroceryItem()).ToList(),
-                cart.CreatedAt,
-                DateTime.UtcNow);
+            await _cartCommandRepository.DeleteCartGroceryItemAsync(itemToDelete);
 
-            await _cartCommandRepository.UpdateCartAsync(cartEntity);
             return new DeleteCartItemResponse(isCartItemDeleted: true, isCartFound: true);
         }
     }
